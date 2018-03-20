@@ -5,6 +5,18 @@
  */
 package trabalhofinal;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.time.Clock;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author bmarquez
@@ -28,33 +40,88 @@ public class Geral extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnNew = new javax.swing.JButton();
+        btnOpen = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnCopy = new javax.swing.JButton();
+        btnPaste = new javax.swing.JButton();
+        btnCut = new javax.swing.JButton();
+        btnCompile = new javax.swing.JButton();
+        btnAbout = new javax.swing.JButton();
+        textArea2 = new java.awt.TextArea();
+        txbMessageBar = new java.awt.TextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtaCommand = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 620));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_insert_drive_file_white_24dp_2x.png"))); // NOI18N
-        jButton1.setText("new [ctrl-n]");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_insert_drive_file_white_24dp_2x.png"))); // NOI18N
+        btnNew.setText("new [ctrl-n]");
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNewActionPerformed(evt);
+            }
+        });
+        btnNew.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnNewKeyPressed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_folder_open_white_24dp_2x.png"))); // NOI18N
-        jButton2.setText("open [ctrl-o]");
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_save_white_24dp_2x.png"))); // NOI18N
-        jButton3.setText("save [ctrl-s]");
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_copy_white_24dp_2x.png"))); // NOI18N
-        jButton4.setText("copy [ctl-c]");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_folder_open_white_24dp_2x.png"))); // NOI18N
+        btnOpen.setText("open [ctrl-o]");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnOpenActionPerformed(evt);
+            }
+        });
+
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_save_white_24dp_2x.png"))); // NOI18N
+        btnSave.setText("save [ctrl-s]");
+
+        btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_copy_white_24dp_2x.png"))); // NOI18N
+        btnCopy.setText("copy [ctrl-c]");
+        btnCopy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCopyActionPerformed(evt);
+            }
+        });
+
+        btnPaste.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_paste_white_24dp_2x.png"))); // NOI18N
+        btnPaste.setText("paste [ctrl-v]");
+        btnPaste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPasteActionPerformed(evt);
+            }
+        });
+
+        btnCut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_cut_white_24dp_2x.png"))); // NOI18N
+        btnCut.setText("cut [ctrl-x]");
+        btnCut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCutActionPerformed(evt);
+            }
+        });
+
+        btnCompile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_play_arrow_white_24dp_2x.png"))); // NOI18N
+        btnCompile.setText("compile [F9]");
+        btnCompile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCompileActionPerformed(evt);
+            }
+        });
+
+        btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_supervisor_account_white_24dp_2x.png"))); // NOI18N
+        btnAbout.setText("about [F1]");
+        btnAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAboutActionPerformed(evt);
+            }
+        });
+        btnAbout.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAboutKeyPressed(evt);
             }
         });
 
@@ -62,50 +129,128 @@ public class Geral extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(145, 145, 145))
+            .addComponent(btnCopy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnPaste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCompile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAbout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(5, 5, 5)
-                .addComponent(jButton2)
+                .addComponent(btnNew)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnOpen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4)
-                .addGap(0, 375, Short.MAX_VALUE))
+                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCopy)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPaste)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCompile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAbout)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        textArea2.setBackground(new java.awt.Color(204, 204, 204));
+        textArea2.setEnabled(false);
+        textArea2.setName("txtMessages"); // NOI18N
+
+        txbMessageBar.setEnabled(false);
+        txbMessageBar.setMinimumSize(new java.awt.Dimension(900, 25));
+        txbMessageBar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txbMessageBarActionPerformed(evt);
+            }
+        });
+
+        jtaCommand.setColumns(20);
+        jtaCommand.setRows(5);
+        jScrollPane1.setViewportView(jtaCommand);
+        jtaCommand.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 755, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(txbMessageBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(textArea2, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txbMessageBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        textArea2.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnNewActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnCopyActionPerformed
+
+    private void btnPasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPasteActionPerformed
+
+    private void btnCutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCutActionPerformed
+
+    private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCompileActionPerformed
+
+    private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAboutActionPerformed
+
+    private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOpenActionPerformed
+
+    private void btnNewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNewKeyPressed
+        
+    }//GEN-LAST:event_btnNewKeyPressed
+
+    private void btnAboutKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAboutKeyPressed
+        
+    }//GEN-LAST:event_btnAboutKeyPressed
+
+    private void txbMessageBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbMessageBarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txbMessageBarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,13 +285,25 @@ public class Geral extends javax.swing.JFrame {
                 new Geral().setVisible(true);
             }
         });
+        
+        new Geral().jtaCommand.setBorder(new NumberedBorder());
+        //JTextArea jtaCommand = new JTextArea();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnAbout;
+    private javax.swing.JButton btnCompile;
+    private javax.swing.JButton btnCopy;
+    private javax.swing.JButton btnCut;
+    private javax.swing.JButton btnNew;
+    private javax.swing.JButton btnOpen;
+    private javax.swing.JButton btnPaste;
+    private javax.swing.JButton btnSave;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jtaCommand;
+    private java.awt.TextArea textArea2;
+    private java.awt.TextField txbMessageBar;
     // End of variables declaration//GEN-END:variables
 }
