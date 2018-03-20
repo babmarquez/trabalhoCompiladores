@@ -5,18 +5,6 @@
  */
 package trabalhofinal;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.time.Clock;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
-
 /**
  *
  * @author bmarquez
@@ -28,6 +16,9 @@ public class Geral extends javax.swing.JFrame {
      */
     public Geral() {
         initComponents();
+        
+        jtaCommand.setBorder(new NumberedBorder());
+        //jtaCommand.setText("teste");
     }
 
     /**
@@ -156,7 +147,7 @@ public class Geral extends javax.swing.JFrame {
                 .addComponent(btnCompile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAbout)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         textArea2.setBackground(new java.awt.Color(204, 204, 204));
@@ -186,8 +177,8 @@ public class Geral extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textArea2, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
@@ -196,15 +187,15 @@ public class Geral extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1)
+                        .addGap(21, 21, 21)
                         .addComponent(textArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txbMessageBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         textArea2.getAccessibleContext().setAccessibleDescription("");
@@ -285,10 +276,6 @@ public class Geral extends javax.swing.JFrame {
                 new Geral().setVisible(true);
             }
         });
-        
-        new Geral().jtaCommand.setBorder(new NumberedBorder());
-        //JTextArea jtaCommand = new JTextArea();
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
