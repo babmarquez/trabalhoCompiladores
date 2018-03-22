@@ -5,20 +5,96 @@
  */
 package trabalhofinal;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author bmarquez
  */
 public class Geral extends javax.swing.JFrame {
+    
+    public class BotaoAtalho extends AbstractAction {
+    
+        private EnumKeys shortcut;
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch(this.shortcut){
+                case CTRLN:
+                    btnNewActionPerformed(e);
+                    break;
+                case CTRLO:
+                    btnOpenActionPerformed(e);
+                    break;
+                case CTRLS:
+                    btnSaveActionPerformed(e);
+                    break;
+                case F9:
+                    btnCompileActionPerformed(e);
+                    break;
+                case F1:
+                    btnAboutActionPerformed(e);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public BotaoAtalho(EnumKeys keyPressed) {
+            this.shortcut = keyPressed;
+        }
+    }
+    
+    //Área de declaração dos botões
+    private BotaoAtalho buttonNew = new BotaoAtalho(EnumKeys.CTRLN);
+    private BotaoAtalho buttonOpen = new BotaoAtalho(EnumKeys.CTRLO);
+    private BotaoAtalho buttonSave = new BotaoAtalho(EnumKeys.CTRLS);
+    private BotaoAtalho buttonCompile = new BotaoAtalho(EnumKeys.F9);
+    private BotaoAtalho buttonAbout = new BotaoAtalho(EnumKeys.F1);
+	
     /**
      * Creates new form Geral
      */
     public Geral() {
         initComponents();
-        
+
+        //seta a borda numerada no campo de edição
         jtaCommand.setBorder(new NumberedBorder());
-        //jtaCommand.setText("teste");
+
+        //Registra as ações do teclado
+        this.acoesDoTeclado(jpArea);
+        this.acoesDoTeclado(jpButtons);
+        this.acoesDoTeclado(jpAreaMensagem);
+    }
+    
+    
+    
+    private void acoesDoTeclado(JPanel painel) {
+        //Cria o ActionMap
+        ActionMap actionMap = painel.getActionMap();
+        
+	actionMap.put("new", buttonNew);
+        actionMap.put("open", buttonOpen);
+        actionMap.put("save", buttonSave);
+        actionMap.put("compile", buttonCompile);
+        actionMap.put("aboutWe", buttonAbout);
+        
+	painel.setActionMap(actionMap);
+	
+	//Pegamos o input map que ocorre sempre que a janela atual está em foco
+	InputMap imap = painel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+
+	//Teclas do teclado
+        imap.put(KeyStroke.getKeyStroke("Ctrl n"), "new");  // Esse ainda não funciona
+        imap.put(KeyStroke.getKeyStroke("ctrl o"), "open"); // Esse ainda não funciona
+        imap.put(KeyStroke.getKeyStroke("ctrl s"), "save"); // Esse ainda não funciona
+        imap.put(KeyStroke.getKeyStroke("F9"), "compile");
+        imap.put(KeyStroke.getKeyStroke("F1"), "aboutWe");
     }
 
     /**
@@ -30,46 +106,38 @@ public class Geral extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        btnNew = new javax.swing.JButton();
-        btnOpen = new javax.swing.JButton();
+        jpArea = new javax.swing.JPanel();
+        jpButtons = new javax.swing.JPanel();
         btnSave = new javax.swing.JButton();
         btnCopy = new javax.swing.JButton();
         btnPaste = new javax.swing.JButton();
         btnCut = new javax.swing.JButton();
         btnCompile = new javax.swing.JButton();
         btnAbout = new javax.swing.JButton();
-        textArea2 = new java.awt.TextArea();
-        txbMessageBar = new java.awt.TextField();
+        btnOpen = new javax.swing.JButton();
+        btnNew = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtaMessageArea = new javax.swing.JTextArea();
+        jtfBarraStatus = new javax.swing.JTextField();
+        jpAreaMensagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtaCommand = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 620));
 
-        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_insert_drive_file_white_24dp_2x.png"))); // NOI18N
-        btnNew.setText("new [ctrl-n]");
-        btnNew.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewActionPerformed(evt);
-            }
-        });
-        btnNew.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnNewKeyPressed(evt);
-            }
-        });
+        jpArea.setMinimumSize(new java.awt.Dimension(900, 620));
 
-        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_folder_open_white_24dp_2x.png"))); // NOI18N
-        btnOpen.setText("open [ctrl-o]");
-        btnOpen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpenActionPerformed(evt);
-            }
-        });
+        jpButtons.setMaximumSize(new java.awt.Dimension(145, 590));
+        jpButtons.setMinimumSize(new java.awt.Dimension(145, 590));
 
         btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_save_white_24dp_2x.png"))); // NOI18N
         btnSave.setText("save [ctrl-s]");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_copy_white_24dp_2x.png"))); // NOI18N
         btnCopy.setText("copy [ctrl-c]");
@@ -116,22 +184,44 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_folder_open_white_24dp_2x.png"))); // NOI18N
+        btnOpen.setText("open [ctrl-o]");
+        btnOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenActionPerformed(evt);
+            }
+        });
+
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_insert_drive_file_white_24dp_2x.png"))); // NOI18N
+        btnNew.setText("new [ctrl-n]");
+        btnNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewActionPerformed(evt);
+            }
+        });
+        btnNew.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnNewKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpButtonsLayout = new javax.swing.GroupLayout(jpButtons);
+        jpButtons.setLayout(jpButtonsLayout);
+        jpButtonsLayout.setHorizontalGroup(
+            jpButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnCopy, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnPaste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCompile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnAbout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnOpen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jpButtonsLayout.setVerticalGroup(
+            jpButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpButtonsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNew)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOpen)
@@ -146,65 +236,84 @@ public class Geral extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCompile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAbout)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addComponent(btnAbout))
         );
 
-        textArea2.setBackground(new java.awt.Color(204, 204, 204));
-        textArea2.setEnabled(false);
-        textArea2.setName("txtMessages"); // NOI18N
+        jtaMessageArea.setEditable(false);
+        jtaMessageArea.setColumns(20);
+        jtaMessageArea.setRows(5);
+        jScrollPane2.setViewportView(jtaMessageArea);
 
-        txbMessageBar.setEnabled(false);
-        txbMessageBar.setMinimumSize(new java.awt.Dimension(900, 25));
-        txbMessageBar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txbMessageBarActionPerformed(evt);
-            }
-        });
+        jtfBarraStatus.setEditable(false);
+        jtfBarraStatus.setMinimumSize(new java.awt.Dimension(900, 25));
 
         jtaCommand.setColumns(20);
         jtaCommand.setRows(5);
+        jtaCommand.setMinimumSize(new java.awt.Dimension(750, 480));
         jScrollPane1.setViewportView(jtaCommand);
         jtaCommand.getAccessibleContext().setAccessibleDescription("");
+        jtaCommand.getAccessibleContext().setAccessibleParent(jpArea);
+
+        javax.swing.GroupLayout jpAreaMensagemLayout = new javax.swing.GroupLayout(jpAreaMensagem);
+        jpAreaMensagem.setLayout(jpAreaMensagemLayout);
+        jpAreaMensagemLayout.setHorizontalGroup(
+            jpAreaMensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
+        );
+        jpAreaMensagemLayout.setVerticalGroup(
+            jpAreaMensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jpAreaLayout = new javax.swing.GroupLayout(jpArea);
+        jpArea.setLayout(jpAreaLayout);
+        jpAreaLayout.setHorizontalGroup(
+            jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpAreaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpAreaLayout.createSequentialGroup()
+                        .addComponent(jtfBarraStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(53, Short.MAX_VALUE))
+                    .addGroup(jpAreaLayout.createSequentialGroup()
+                        .addComponent(jpButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpAreaLayout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30))
+                            .addComponent(jpAreaMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+        );
+        jpAreaLayout.setVerticalGroup(
+            jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpAreaLayout.createSequentialGroup()
+                .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpAreaLayout.createSequentialGroup()
+                        .addComponent(jpAreaMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtfBarraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txbMessageBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textArea2, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())))
+            .addComponent(jpArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(21, 21, 21)
-                        .addComponent(textArea2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txbMessageBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jpArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        textArea2.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        // TODO add your handling code here:
+        System.out.println("passou aqui ctrl n");
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
@@ -220,28 +329,28 @@ public class Geral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCutActionPerformed
 
     private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-        // TODO add your handling code here:
+        System.out.println("passou aqui F9");
     }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        // TODO add your handling code here:
+        System.out.println("passou aqui F1");
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-        // TODO add your handling code here:
+       System.out.println("passou aqui ctrl o");
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnNewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNewKeyPressed
-        
+
     }//GEN-LAST:event_btnNewKeyPressed
 
     private void btnAboutKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAboutKeyPressed
-        
+
     }//GEN-LAST:event_btnAboutKeyPressed
 
-    private void txbMessageBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbMessageBarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txbMessageBarActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        System.out.println("passou aqui ctrl s");
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -287,10 +396,13 @@ public class Geral extends javax.swing.JFrame {
     private javax.swing.JButton btnOpen;
     private javax.swing.JButton btnPaste;
     private javax.swing.JButton btnSave;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jpArea;
+    private javax.swing.JPanel jpAreaMensagem;
+    private javax.swing.JPanel jpButtons;
     private javax.swing.JTextArea jtaCommand;
-    private java.awt.TextArea textArea2;
-    private java.awt.TextField txbMessageBar;
+    private javax.swing.JTextArea jtaMessageArea;
+    private javax.swing.JTextField jtfBarraStatus;
     // End of variables declaration//GEN-END:variables
 }
