@@ -384,7 +384,6 @@ public class Geral extends javax.swing.JFrame {
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
         jpArea.setSize(this.getWidth(), this.getHeight());
-       
         add(jpArea);
     }//GEN-LAST:event_formComponentResized
 
