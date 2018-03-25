@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -23,6 +22,7 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.TransferHandler;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -73,6 +73,8 @@ public class Geral extends javax.swing.JFrame {
     private String filePath;
     
     private FileNameExtensionFilter fileNameExtensionFilter;
+    private Clipboard clipboard;
+    private TransferHandler transferHandler;
     
     /**
      * Creates new form Geral
@@ -89,10 +91,10 @@ public class Geral extends javax.swing.JFrame {
         this.acoesDoTeclado(jpButtons);
         this.acoesDoTeclado(jpAreaMensagem);
         
-        this.filePath = "";
         this.fileNameExtensionFilter = new FileNameExtensionFilter("Documento de Texto (*.txt)", "txt");
+        transferHandler = jtaCommand.getTransferHandler();
         
-        mostrarNomeArquivo();
+        mostrarNomeArquivo("");
     }
 
     private void acoesDoTeclado(JPanel painel) {
@@ -118,7 +120,8 @@ public class Geral extends javax.swing.JFrame {
         imap.put(KeyStroke.getKeyStroke("F1"), "aboutWe");
     }
     
-    private void mostrarNomeArquivo(){
+    private void mostrarNomeArquivo(String path){
+        this.filePath = path;
         jtfBarraStatus.setText(this.filePath);
     }
     
@@ -147,8 +150,7 @@ public class Geral extends javax.swing.JFrame {
             case APPROVE_OPTION:
                 this.clearAll();
                 File arquivo = jFileChooser.getSelectedFile();
-                this.filePath = arquivo.getAbsolutePath();
-                this.mostrarNomeArquivo();
+                this.mostrarNomeArquivo(arquivo.getAbsolutePath());
                 try (BufferedReader bufferedReader = new BufferedReader(new FileReader(arquivo))) {
                     StringBuilder stringBuilder = new StringBuilder();
                     bufferedReader.lines().forEach(line -> stringBuilder.append(line).append("\n"));
@@ -167,14 +169,16 @@ public class Geral extends javax.swing.JFrame {
             jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             jFileChooser.setAcceptAllFileFilterUsed(false);
             jFileChooser.setFileFilter(fileNameExtensionFilter);
-            int opcao = jFileChooser.showSaveDialog(this);
-            if (opcao == APPROVE_OPTION) {
-                this.filePath = jFileChooser.getSelectedFile().getAbsolutePath();
+            int option = jFileChooser.showSaveDialog(this);
+            if (option == APPROVE_OPTION) {
+                this.mostrarNomeArquivo(jFileChooser.getSelectedFile().getAbsolutePath());
                 if (!this.filePath.toLowerCase().endsWith(".txt")) {
                     this.filePath += ".txt";
                 }
+                
                 File arquivo = new File(filePath);
                 JOptionPane.showMessageDialog(null, arquivo.getAbsoluteFile());
+                
                 try {
                     BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(arquivo));
                     bufferedWriter.write(this.jtaCommand.getText());
@@ -184,7 +188,6 @@ public class Geral extends javax.swing.JFrame {
                 }
             }
 
-            this.mostrarNomeArquivo();
             this.clearMessageArea();
             return;
         }
@@ -200,14 +203,26 @@ public class Geral extends javax.swing.JFrame {
         this.clearMessageArea();
     }
 
-    private void compilar(){
+    private void cut(java.awt.event.ActionEvent evt) {
+        transferHandler.exportToClipboard(jtaCommand, clipboard, TransferHandler.MOVE);
+    }
+
+    private void copy(java.awt.event.ActionEvent evt) {
+        transferHandler.exportToClipboard(jtaCommand, clipboard, TransferHandler.COPY);
+    }
+
+    private void paste(java.awt.event.ActionEvent evt) {
+        transferHandler.importData(jtaCommand, clipboard.getContents(null));
+    }
+    
+    private void compile(){
         jtaMessageArea.append("Compilação de programas ainda não foi implementada. \n");
     }
     
-    private void sobre(){
+    private void about(){
         jtaMessageArea.append("Equipe formada por: Ana Paula Fidelis e Bárbara Marquez. \n");
     }
-    
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -438,23 +453,23 @@ public class Geral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
-        
+        this.copy(evt);
     }//GEN-LAST:event_btnCopyActionPerformed
 
     private void btnPasteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPasteActionPerformed
-        
+        this.paste(evt);
     }//GEN-LAST:event_btnPasteActionPerformed
 
     private void btnCutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCutActionPerformed
-        
+        this.cut(evt);
     }//GEN-LAST:event_btnCutActionPerformed
 
     private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-        this.compilar();
+        this.compile();
     }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        this.sobre();
+        this.about();
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
