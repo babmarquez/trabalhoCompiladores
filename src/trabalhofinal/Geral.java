@@ -17,13 +17,13 @@ import javax.swing.KeyStroke;
  * @author bmarquez
  */
 public class Geral extends javax.swing.JFrame {
-    
+    //Classe para controle dos clicks e atalhos
     public class BotaoAtalho extends AbstractAction {
-    
         private EnumKeys shortcut;
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            //Compara os atalhos através dos valores do enum
             switch(this.shortcut){
                 case CTRLN:
                     btnNewActionPerformed(e);
@@ -56,14 +56,17 @@ public class Geral extends javax.swing.JFrame {
     private BotaoAtalho buttonSave = new BotaoAtalho(EnumKeys.CTRLS);
     private BotaoAtalho buttonCompile = new BotaoAtalho(EnumKeys.F9);
     private BotaoAtalho buttonAbout = new BotaoAtalho(EnumKeys.F1);
+    
+    private String filePath;
 	
     /**
      * Creates new form Geral
      */
     public Geral() {
+        //Inicia os componentes
         initComponents();
 
-        //seta a borda numerada no campo de edição
+        //Seta a borda numerada no campo de edição
         jtaCommand.setBorder(new NumberedBorder());
 
         //Registra as ações do teclado
@@ -71,9 +74,7 @@ public class Geral extends javax.swing.JFrame {
         this.acoesDoTeclado(jpButtons);
         this.acoesDoTeclado(jpAreaMensagem);
     }
-    
-    
-    
+
     private void acoesDoTeclado(JPanel painel) {
         //Cria o ActionMap
         ActionMap actionMap = painel.getActionMap();
@@ -95,6 +96,19 @@ public class Geral extends javax.swing.JFrame {
         imap.put(KeyStroke.getKeyStroke("ctrl s"), "save"); // Esse ainda não funciona
         imap.put(KeyStroke.getKeyStroke("F9"), "compile");
         imap.put(KeyStroke.getKeyStroke("F1"), "aboutWe");
+    }
+    
+    private void mostrarNomeArquivo(){
+        jtfBarraStatus.setText(this.filePath);
+    }
+    
+    private void limparNomeArquivo(){
+        this.filePath = "";
+    }
+    
+    private void criarNovo(){
+        this.jtaCommand.setText("");
+        this.limparNomeArquivo();
     }
 
     /**
@@ -131,7 +145,7 @@ public class Geral extends javax.swing.JFrame {
         jpButtons.setMaximumSize(new java.awt.Dimension(145, 590));
         jpButtons.setMinimumSize(new java.awt.Dimension(145, 590));
 
-        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_save_white_24dp_2x.png"))); // NOI18N
+        btnSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_save_white_24dp_2x.png"))); // NOI18N
         btnSave.setText("save [ctrl-s]");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,7 +153,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_copy_white_24dp_2x.png"))); // NOI18N
+        btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_content_copy_white_24dp_2x.png"))); // NOI18N
         btnCopy.setText("copy [ctrl-c]");
         btnCopy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,7 +161,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnPaste.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_paste_white_24dp_2x.png"))); // NOI18N
+        btnPaste.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_content_paste_white_24dp_2x.png"))); // NOI18N
         btnPaste.setText("paste [ctrl-v]");
         btnPaste.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,7 +169,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnCut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_content_cut_white_24dp_2x.png"))); // NOI18N
+        btnCut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_content_cut_white_24dp_2x.png"))); // NOI18N
         btnCut.setText("cut [ctrl-x]");
         btnCut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,7 +177,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnCompile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_play_arrow_white_24dp_2x.png"))); // NOI18N
+        btnCompile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_play_arrow_white_24dp_2x.png"))); // NOI18N
         btnCompile.setText("compile [F9]");
         btnCompile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,7 +185,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_supervisor_account_white_24dp_2x.png"))); // NOI18N
+        btnAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_supervisor_account_white_24dp_2x.png"))); // NOI18N
         btnAbout.setText("about [F1]");
         btnAbout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,7 +198,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_folder_open_white_24dp_2x.png"))); // NOI18N
+        btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_folder_open_white_24dp_2x.png"))); // NOI18N
         btnOpen.setText("open [ctrl-o]");
         btnOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,7 +206,7 @@ public class Geral extends javax.swing.JFrame {
             }
         });
 
-        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/ic_insert_drive_file_white_24dp_2x.png"))); // NOI18N
+        btnNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalhofinal/images/ic_insert_drive_file_white_24dp_2x.png"))); // NOI18N
         btnNew.setText("new [ctrl-n]");
         btnNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,6 +260,11 @@ public class Geral extends javax.swing.JFrame {
 
         jtfBarraStatus.setEditable(false);
         jtfBarraStatus.setMinimumSize(new java.awt.Dimension(900, 25));
+        jtfBarraStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfBarraStatusActionPerformed(evt);
+            }
+        });
 
         jtaCommand.setColumns(20);
         jtaCommand.setRows(5);
@@ -314,6 +333,7 @@ public class Geral extends javax.swing.JFrame {
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
         System.out.println("passou aqui ctrl n");
+        this.criarNovo();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
@@ -329,11 +349,11 @@ public class Geral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCutActionPerformed
 
     private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-        System.out.println("passou aqui F9");
+        jtaMessageArea.append("Compilação de programas ainda não foi implementada. \n");
     }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        System.out.println("passou aqui F1");
+        jtaMessageArea.append("Ana Paula Fidelis e Bárbara Marquez. \n");
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
@@ -351,6 +371,10 @@ public class Geral extends javax.swing.JFrame {
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         System.out.println("passou aqui ctrl s");
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void jtfBarraStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfBarraStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfBarraStatusActionPerformed
 
     /**
      * @param args the command line arguments

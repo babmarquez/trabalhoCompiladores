@@ -7,7 +7,7 @@ package trabalhofinal;
 
 /**
  *
- * @author Barbara
+ * @author bmarquez
  */
 public enum EnumKeys {
     CTRLN,CTRLO,CTRLS,F9,F1;

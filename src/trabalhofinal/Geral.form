@@ -137,7 +137,7 @@
             <Component class="javax.swing.JButton" name="btnSave">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_save_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_save_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="save [ctrl-s]"/>
               </Properties>
@@ -148,7 +148,7 @@
             <Component class="javax.swing.JButton" name="btnCopy">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_content_copy_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_content_copy_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="copy [ctrl-c]"/>
               </Properties>
@@ -159,7 +159,7 @@
             <Component class="javax.swing.JButton" name="btnPaste">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_content_paste_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_content_paste_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="paste [ctrl-v]"/>
               </Properties>
@@ -170,7 +170,7 @@
             <Component class="javax.swing.JButton" name="btnCut">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_content_cut_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_content_cut_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="cut [ctrl-x]"/>
               </Properties>
@@ -181,7 +181,7 @@
             <Component class="javax.swing.JButton" name="btnCompile">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_play_arrow_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_play_arrow_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="compile [F9]"/>
               </Properties>
@@ -192,7 +192,7 @@
             <Component class="javax.swing.JButton" name="btnAbout">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_supervisor_account_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_supervisor_account_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="about [F1]"/>
               </Properties>
@@ -204,7 +204,7 @@
             <Component class="javax.swing.JButton" name="btnOpen">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_folder_open_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_folder_open_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="open [ctrl-o]"/>
               </Properties>
@@ -215,7 +215,7 @@
             <Component class="javax.swing.JButton" name="btnNew">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/trabalhofinal/ic_insert_drive_file_white_24dp_2x.png"/>
+                  <Image iconType="3" name="/trabalhofinal/images/ic_insert_drive_file_white_24dp_2x.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="new [ctrl-n]"/>
               </Properties>
@@ -249,6 +249,9 @@
               <Dimension value="[900, 25]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfBarraStatusActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jpAreaMensagem">
 
