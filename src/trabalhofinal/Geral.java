@@ -139,6 +139,11 @@ public class Geral extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 620));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
         jpArea.setMinimumSize(new java.awt.Dimension(900, 620));
 
@@ -299,8 +304,8 @@ public class Geral extends javax.swing.JFrame {
                         .addGap(13, 13, 13)
                         .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpAreaLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
+                                .addGap(53, 53, 53))
                             .addComponent(jpAreaMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jpAreaLayout.setVerticalGroup(
@@ -372,9 +377,16 @@ public class Geral extends javax.swing.JFrame {
         System.out.println("passou aqui ctrl s");
     }//GEN-LAST:event_btnSaveActionPerformed
 
+
     private void jtfBarraStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfBarraStatusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfBarraStatusActionPerformed
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        jpArea.setSize(this.getWidth(), this.getHeight());
+       
+        add(jpArea);
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
