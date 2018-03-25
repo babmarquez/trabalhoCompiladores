@@ -419,7 +419,8 @@ public class Geral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
-       System.out.println("passou aqui ctrl o");
+        this.open();
+        System.out.println("passou aqui ctrl o");
     }//GEN-LAST:event_btnOpenActionPerformed
 
     private void btnNewKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNewKeyPressed
