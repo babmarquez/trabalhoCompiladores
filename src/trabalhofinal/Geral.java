@@ -5,12 +5,24 @@
  */
 package trabalhofinal;
 
+import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
+import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.TransferHandler;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -58,6 +70,10 @@ public class Geral extends javax.swing.JFrame {
     private BotaoAtalho buttonAbout = new BotaoAtalho(EnumKeys.F1);
     
     private String filePath;
+    
+    private FileNameExtensionFilter fileNameExtensionFilter;
+    private Clipboard clipboard;
+    //private TransferHandler transferHandler;
 	
     /**
      * Creates new form Geral
@@ -73,6 +89,12 @@ public class Geral extends javax.swing.JFrame {
         this.acoesDoTeclado(jpArea);
         this.acoesDoTeclado(jpButtons);
         this.acoesDoTeclado(jpAreaMensagem);
+        
+        this.filePath = "";
+        this.fileNameExtensionFilter = new FileNameExtensionFilter("Documento de Texto (*.txt)", "txt");
+        System.out.println(Arrays.toString(fileNameExtensionFilter.getExtensions()));
+        
+        mostrarNomeArquivo();
     }
 
     private void acoesDoTeclado(JPanel painel) {
@@ -102,15 +124,51 @@ public class Geral extends javax.swing.JFrame {
         jtfBarraStatus.setText(this.filePath);
     }
     
-    private void limparNomeArquivo(){
+    private void clearMessageArea(){
+        this.jtaMessageArea.setText("");
+    }
+        
+    private void clearAll() {
         this.filePath = "";
+        this.jtaCommand.setText("");
+        this.jtaMessageArea.setText("");
+        this.jtfBarraStatus.setText("");
     }
     
-    private void criarNovo(){
-        this.jtaCommand.setText("");
-        this.limparNomeArquivo();
+    private void createNew(){
+        this.clearAll();
+    }
+    
+    private void open(){
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setFileFilter(fileNameExtensionFilter);
+        jFileChooser.setAcceptAllFileFilterUsed(false);
+        int open = jFileChooser.showOpenDialog(this);
+        switch (open) {
+            case APPROVE_OPTION:
+                this.clearAll();
+                File arquivo = jFileChooser.getSelectedFile();
+                this.filePath = arquivo.getAbsolutePath();
+                this.mostrarNomeArquivo();
+                try (BufferedReader bufferedReader = new BufferedReader(new FileReader(arquivo))) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    bufferedReader.lines().forEach(line -> stringBuilder.append(line).append("\n"));
+                    this.jtaCommand.setText(stringBuilder.toString());
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível abrir o seu arquivo", "Aviso", ERROR_MESSAGE);
+                }
+                break;
+        }
     }
 
+    private void compilar(){
+        jtaMessageArea.append("Compilação de programas ainda não foi implementada. \n");
+    }
+    
+    private void sobre(){
+        jtaMessageArea.append("Ana Paula Fidelis e Bárbara Marquez. \n");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -337,8 +395,7 @@ public class Geral extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewActionPerformed
-        System.out.println("passou aqui ctrl n");
-        this.criarNovo();
+        this.createNew();
     }//GEN-LAST:event_btnNewActionPerformed
 
     private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
@@ -354,11 +411,11 @@ public class Geral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCutActionPerformed
 
     private void btnCompileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompileActionPerformed
-        jtaMessageArea.append("Compilação de programas ainda não foi implementada. \n");
+        this.compilar();
     }//GEN-LAST:event_btnCompileActionPerformed
 
     private void btnAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAboutActionPerformed
-        jtaMessageArea.append("Ana Paula Fidelis e Bárbara Marquez. \n");
+        this.sobre();
     }//GEN-LAST:event_btnAboutActionPerformed
 
     private void btnOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenActionPerformed
