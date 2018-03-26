@@ -7,6 +7,7 @@ package trabalhofinal;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -31,7 +32,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class Geral extends javax.swing.JFrame {
     //Classe para controle dos clicks e atalhos
-    public class BotaoAtalho extends AbstractAction {
+    public class ShortcutButton extends AbstractAction {
         private EnumKeys shortcut;
 
         @Override
@@ -58,17 +59,17 @@ public class Geral extends javax.swing.JFrame {
             }
         }
 
-        public BotaoAtalho(EnumKeys keyPressed) {
+        public ShortcutButton(EnumKeys keyPressed) {
             this.shortcut = keyPressed;
         }
     }
     
     //Área de declaração dos botões
-    private BotaoAtalho buttonNew = new BotaoAtalho(EnumKeys.CTRLN);
-    private BotaoAtalho buttonOpen = new BotaoAtalho(EnumKeys.CTRLO);
-    private BotaoAtalho buttonSave = new BotaoAtalho(EnumKeys.CTRLS);
-    private BotaoAtalho buttonCompile = new BotaoAtalho(EnumKeys.F9);
-    private BotaoAtalho buttonAbout = new BotaoAtalho(EnumKeys.F1);
+    private ShortcutButton buttonNew = new ShortcutButton(EnumKeys.CTRLN);
+    private ShortcutButton buttonOpen = new ShortcutButton(EnumKeys.CTRLO);
+    private ShortcutButton buttonSave = new ShortcutButton(EnumKeys.CTRLS);
+    private ShortcutButton buttonCompile = new ShortcutButton(EnumKeys.F9);
+    private ShortcutButton buttonAbout = new ShortcutButton(EnumKeys.F1);
     
     private String filePath;
     
@@ -87,17 +88,17 @@ public class Geral extends javax.swing.JFrame {
         jtaCommand.setBorder(new NumberedBorder());
 
         //Registra as ações do teclado
-        this.acoesDoTeclado(jpArea);
-        this.acoesDoTeclado(jpButtons);
-        this.acoesDoTeclado(jpAreaMensagem);
+        this.keyboardActions(jpArea);
+        this.keyboardActions(jpButtons);
+        this.keyboardActions(jpAreaMensagem);
         
         this.fileNameExtensionFilter = new FileNameExtensionFilter("Documento de Texto (*.txt)", "txt");
         transferHandler = jtaCommand.getTransferHandler();
         
-        mostrarNomeArquivo("");
+        showFileName("");
     }
 
-    private void acoesDoTeclado(JPanel painel) {
+    private void keyboardActions(JPanel painel) {
         //Cria o ActionMap
         ActionMap actionMap = painel.getActionMap();
         
@@ -113,14 +114,14 @@ public class Geral extends javax.swing.JFrame {
 	InputMap imap = painel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 
 	//Teclas do teclado
-        imap.put(KeyStroke.getKeyStroke("Ctrl n"), "new");  // Esse ainda não funciona
+        imap.put(KeyStroke.getKeyStrokeForEvent(null,KeyEvent.VK_C), "new");  // Esse ainda não funciona
         imap.put(KeyStroke.getKeyStroke("ctrl o"), "open"); // Esse ainda não funciona
         imap.put(KeyStroke.getKeyStroke("ctrl s"), "save"); // Esse ainda não funciona
         imap.put(KeyStroke.getKeyStroke("F9"), "compile");
         imap.put(KeyStroke.getKeyStroke("F1"), "aboutWe");
     }
     
-    private void mostrarNomeArquivo(String path){
+    private void showFileName(String path){
         this.filePath = path;
         jtfBarraStatus.setText(this.filePath);
     }
@@ -149,9 +150,9 @@ public class Geral extends javax.swing.JFrame {
         switch (open) {
             case APPROVE_OPTION:
                 this.clearAll();
-                File arquivo = jFileChooser.getSelectedFile();
-                this.mostrarNomeArquivo(arquivo.getAbsolutePath());
-                try (BufferedReader bufferedReader = new BufferedReader(new FileReader(arquivo))) {
+                File file = jFileChooser.getSelectedFile();
+                this.showFileName(file.getAbsolutePath());
+                try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
                     StringBuilder stringBuilder = new StringBuilder();
                     bufferedReader.lines().forEach(line -> stringBuilder.append(line).append("\n"));
                     this.jtaCommand.setText(stringBuilder.toString());
@@ -171,7 +172,7 @@ public class Geral extends javax.swing.JFrame {
             jFileChooser.setFileFilter(fileNameExtensionFilter);
             int option = jFileChooser.showSaveDialog(this);
             if (option == APPROVE_OPTION) {
-                this.mostrarNomeArquivo(jFileChooser.getSelectedFile().getAbsolutePath());
+                this.showFileName(jFileChooser.getSelectedFile().getAbsolutePath());
                 if (!this.filePath.toLowerCase().endsWith(".txt")) {
                     this.filePath += ".txt";
                 }
