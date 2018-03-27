@@ -7,6 +7,7 @@ package trabalhofinal;
 
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -114,9 +115,9 @@ public class Geral extends javax.swing.JFrame {
 	InputMap imap = painel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 
 	//Teclas do teclado
-        imap.put(KeyStroke.getKeyStrokeForEvent(null,KeyEvent.VK_C), "new");  // Esse ainda não funciona
-        imap.put(KeyStroke.getKeyStroke("ctrl o"), "open"); // Esse ainda não funciona
-        imap.put(KeyStroke.getKeyStroke("ctrl s"), "save"); // Esse ainda não funciona
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N,InputEvent.CTRL_MASK), "new");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_O,InputEvent.CTRL_MASK), "open");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S,InputEvent.CTRL_MASK), "save");
         imap.put(KeyStroke.getKeyStroke("F9"), "compile");
         imap.put(KeyStroke.getKeyStroke("F1"), "aboutWe");
     }
