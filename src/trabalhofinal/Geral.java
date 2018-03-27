@@ -5,6 +5,7 @@
  */
 package trabalhofinal;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
@@ -87,6 +88,11 @@ public class Geral extends javax.swing.JFrame {
 
         //Seta a borda numerada no campo de edição
         jtaCommand.setBorder(new NumberedBorder());
+        
+        jpButtons.setBackground(Color.LIGHT_GRAY);
+        jpArea.setBackground(Color.LIGHT_GRAY);
+        jpAreaMensagem.setBackground(Color.LIGHT_GRAY);
+        jtfBarraStatus.setBackground(Color.LIGHT_GRAY); 
 
         //Registra as ações do teclado
         this.keyboardActions(jpArea);
@@ -261,7 +267,6 @@ public class Geral extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 620));
-        setPreferredSize(new java.awt.Dimension(900, 620));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -366,7 +371,7 @@ public class Geral extends javax.swing.JFrame {
         jpButtonsLayout.setVerticalGroup(
             jpButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpButtonsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(btnNew)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOpen)
@@ -381,7 +386,8 @@ public class Geral extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCompile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAbout))
+                .addComponent(btnAbout)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -394,8 +400,10 @@ public class Geral extends javax.swing.JFrame {
         jpArea.add(jpButtons, gridBagConstraints);
 
         jtaMessageArea.setEditable(false);
-        jtaMessageArea.setColumns(20);
-        jtaMessageArea.setRows(5);
+        jtaMessageArea.setColumns(200);
+        jtaMessageArea.setRows(200);
+        jtaMessageArea.setMinimumSize(new java.awt.Dimension(750, 105));
+        jtaMessageArea.setPreferredSize(new java.awt.Dimension(750, 105));
         jScrollPane2.setViewportView(jtaMessageArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -403,16 +411,19 @@ public class Geral extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 708;
-        gridBagConstraints.ipady = 64;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 750;
+        gridBagConstraints.ipady = 105;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_END;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(9, 13, 0, 0);
         jpArea.add(jScrollPane2, gridBagConstraints);
 
         jtfBarraStatus.setEditable(false);
+        jtfBarraStatus.setBackground(new java.awt.Color(102, 102, 102));
+        jtfBarraStatus.setToolTipText("");
+        jtfBarraStatus.setBorder(null);
         jtfBarraStatus.setMinimumSize(new java.awt.Dimension(900, 25));
         jtfBarraStatus.setPreferredSize(new java.awt.Dimension(900, 25));
         jtfBarraStatus.addActionListener(new java.awt.event.ActionListener() {
@@ -430,13 +441,13 @@ public class Geral extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(9, 15, 31, 0);
         jpArea.add(jtfBarraStatus, gridBagConstraints);
 
-        jpAreaMensagem.setPreferredSize(new java.awt.Dimension(793, 449));
-        jpAreaMensagem.setLayout(new java.awt.GridLayout());
+        jpAreaMensagem.setMinimumSize(new java.awt.Dimension(750, 480));
+        jpAreaMensagem.setPreferredSize(new java.awt.Dimension(750, 480));
+        jpAreaMensagem.setLayout(new java.awt.GridLayout(1, 0));
 
-        jtaCommand.setColumns(20);
-        jtaCommand.setRows(5);
+        jtaCommand.setColumns(200);
+        jtaCommand.setRows(200);
         jtaCommand.setMinimumSize(new java.awt.Dimension(0, 0));
-        jtaCommand.setPreferredSize(new java.awt.Dimension(750, 480));
         jScrollPane1.setViewportView(jtaCommand);
         jtaCommand.getAccessibleContext().setAccessibleDescription("");
         jtaCommand.getAccessibleContext().setAccessibleParent(jpArea);
@@ -445,13 +456,11 @@ public class Geral extends javax.swing.JFrame {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 760;
-        gridBagConstraints.ipady = 429;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 13, 0, 0);
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 13, 150, 0);
         jpArea.add(jpAreaMensagem, gridBagConstraints);
 
         getContentPane().add(jpArea, "card2");
