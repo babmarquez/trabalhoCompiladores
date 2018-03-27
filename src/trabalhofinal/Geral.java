@@ -240,6 +240,7 @@ public class Geral extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jpArea = new javax.swing.JPanel();
         jpButtons = new javax.swing.JPanel();
@@ -260,13 +261,17 @@ public class Geral extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 620));
+        setPreferredSize(new java.awt.Dimension(900, 620));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
             }
         });
+        getContentPane().setLayout(new java.awt.CardLayout());
 
         jpArea.setMinimumSize(new java.awt.Dimension(900, 620));
+        jpArea.setPreferredSize(new java.awt.Dimension(900, 620));
+        jpArea.setLayout(new java.awt.GridBagLayout());
 
         jpButtons.setMaximumSize(new java.awt.Dimension(145, 590));
         jpButtons.setMinimumSize(new java.awt.Dimension(145, 590));
@@ -379,80 +384,77 @@ public class Geral extends javax.swing.JFrame {
                 .addComponent(btnAbout))
         );
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 30;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 15, 0, 0);
+        jpArea.add(jpButtons, gridBagConstraints);
+
         jtaMessageArea.setEditable(false);
         jtaMessageArea.setColumns(20);
         jtaMessageArea.setRows(5);
         jScrollPane2.setViewportView(jtaMessageArea);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 708;
+        gridBagConstraints.ipady = 64;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(9, 13, 0, 0);
+        jpArea.add(jScrollPane2, gridBagConstraints);
+
         jtfBarraStatus.setEditable(false);
         jtfBarraStatus.setMinimumSize(new java.awt.Dimension(900, 25));
+        jtfBarraStatus.setPreferredSize(new java.awt.Dimension(900, 25));
         jtfBarraStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfBarraStatusActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 14;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(9, 15, 31, 0);
+        jpArea.add(jtfBarraStatus, gridBagConstraints);
+
+        jpAreaMensagem.setPreferredSize(new java.awt.Dimension(793, 449));
+        jpAreaMensagem.setLayout(new java.awt.GridLayout());
 
         jtaCommand.setColumns(20);
         jtaCommand.setRows(5);
-        jtaCommand.setMinimumSize(new java.awt.Dimension(750, 480));
+        jtaCommand.setMinimumSize(new java.awt.Dimension(0, 0));
+        jtaCommand.setPreferredSize(new java.awt.Dimension(750, 480));
         jScrollPane1.setViewportView(jtaCommand);
         jtaCommand.getAccessibleContext().setAccessibleDescription("");
         jtaCommand.getAccessibleContext().setAccessibleParent(jpArea);
 
-        javax.swing.GroupLayout jpAreaMensagemLayout = new javax.swing.GroupLayout(jpAreaMensagem);
-        jpAreaMensagem.setLayout(jpAreaMensagemLayout);
-        jpAreaMensagemLayout.setHorizontalGroup(
-            jpAreaMensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
-        );
-        jpAreaMensagemLayout.setVerticalGroup(
-            jpAreaMensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
-        );
+        jpAreaMensagem.add(jScrollPane1);
 
-        javax.swing.GroupLayout jpAreaLayout = new javax.swing.GroupLayout(jpArea);
-        jpArea.setLayout(jpAreaLayout);
-        jpAreaLayout.setHorizontalGroup(
-            jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAreaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpAreaLayout.createSequentialGroup()
-                        .addComponent(jtfBarraStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(53, Short.MAX_VALUE))
-                    .addGroup(jpAreaLayout.createSequentialGroup()
-                        .addComponent(jpButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)
-                        .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpAreaLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
-                                .addGap(53, 53, 53))
-                            .addComponent(jpAreaMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-        );
-        jpAreaLayout.setVerticalGroup(
-            jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAreaLayout.createSequentialGroup()
-                .addGroup(jpAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpAreaLayout.createSequentialGroup()
-                        .addComponent(jpAreaMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jpButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfBarraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 760;
+        gridBagConstraints.ipady = 429;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 13, 0, 0);
+        jpArea.add(jpAreaMensagem, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpArea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jpArea, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
