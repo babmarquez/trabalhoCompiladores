@@ -74,10 +74,9 @@ public class Geral extends javax.swing.JFrame {
     private ShortcutButton buttonAbout = new ShortcutButton(EnumKeys.F1);
     
     private String filePath;
-    
-    private FileNameExtensionFilter fileNameExtensionFilter;
     private Clipboard clipboard;
     private TransferHandler transferHandler;
+    private FileNameExtensionFilter fileNameExtensionFilter;
     
     /**
      * Creates new form Geral
@@ -93,12 +92,12 @@ public class Geral extends javax.swing.JFrame {
         this.keyboardActions(jpArea);
         this.keyboardActions(jpButtons);
         this.keyboardActions(jpAreaMensagem);
-        
+        //O tipo de extensão do arquivo
         this.fileNameExtensionFilter = new FileNameExtensionFilter("Documento de Texto (*.txt)", "txt");
-        
+        //Controle dos atalhos de copiar, colar e recortar
         clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         transferHandler = jtaCommand.getTransferHandler();
-        
+        //Inicializa a variável como vazia
         showFileName("");
     }
 
@@ -114,7 +113,7 @@ public class Geral extends javax.swing.JFrame {
         
 	painel.setActionMap(actionMap);
 	
-	//Pegamos o input map que ocorre sempre que a janela atual está em foco
+	//Pegamos o input map
 	InputMap imap = painel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 
 	//Teclas do teclado
@@ -126,15 +125,19 @@ public class Geral extends javax.swing.JFrame {
     }
     
     private void showFileName(String path){
+        //Salva o nome da variável
         this.filePath = path;
+        //Coloca como texto da nossa barra de status
         jtfBarraStatus.setText(this.filePath);
     }
     
     private void clearMessageArea(){
+        //Limpa a área de mensagem
         this.jtaMessageArea.setText("");
     }
         
     private void clearAll() {
+        //Limpa todos os componentes
         this.filePath = "";
         this.jtaCommand.setText("");
         this.jtfBarraStatus.setText("");
@@ -143,6 +146,7 @@ public class Geral extends javax.swing.JFrame {
     }
     
     private void createNew(){
+        //Para criar um novo, deve limpar tudo
         this.clearAll();
     }
     
