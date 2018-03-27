@@ -5,6 +5,7 @@
  */
 package trabalhofinal;
 
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
@@ -94,6 +95,8 @@ public class Geral extends javax.swing.JFrame {
         this.keyboardActions(jpAreaMensagem);
         
         this.fileNameExtensionFilter = new FileNameExtensionFilter("Documento de Texto (*.txt)", "txt");
+        
+        clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         transferHandler = jtaCommand.getTransferHandler();
         
         showFileName("");
