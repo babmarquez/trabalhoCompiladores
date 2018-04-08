@@ -5,6 +5,7 @@
  */
 package trabalhofinal;
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.awt.Font;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -34,14 +36,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author bmarquez
  */
 public class Geral extends javax.swing.JFrame {
+
     //Classe para controle dos clicks e atalhos
     public class ShortcutButton extends AbstractAction {
+
         private EnumKeys shortcut;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             //Compara os atalhos através dos valores do enum
-            switch(this.shortcut){
+            switch (this.shortcut) {
                 case CTRLN:
                     btnNewActionPerformed(e);
                     break;
@@ -66,19 +70,19 @@ public class Geral extends javax.swing.JFrame {
             this.shortcut = keyPressed;
         }
     }
-    
+
     //Área de declaração dos botões
     private ShortcutButton buttonNew = new ShortcutButton(EnumKeys.CTRLN);
     private ShortcutButton buttonOpen = new ShortcutButton(EnumKeys.CTRLO);
     private ShortcutButton buttonSave = new ShortcutButton(EnumKeys.CTRLS);
     private ShortcutButton buttonCompile = new ShortcutButton(EnumKeys.F9);
     private ShortcutButton buttonAbout = new ShortcutButton(EnumKeys.F1);
-    
+
     private String filePath;
     private Clipboard clipboard;
     private TransferHandler transferHandler;
     private FileNameExtensionFilter fileNameExtensionFilter;
-    
+
     /**
      * Creates new form Geral
      */
@@ -88,11 +92,13 @@ public class Geral extends javax.swing.JFrame {
 
         //Seta a borda numerada no campo de edição
         jtaCommand.setBorder(new NumberedBorder());
-        
+
         jpButtons.setBackground(Color.LIGHT_GRAY);
         jpArea.setBackground(Color.LIGHT_GRAY);
         jpAreaMensagem.setBackground(Color.LIGHT_GRAY);
-        jtfBarraStatus.setBackground(Color.LIGHT_GRAY); 
+        jtfBarraStatus.setBackground(Color.LIGHT_GRAY);
+        
+        jtaMessageArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));        
 
         //Registra as ações do teclado
         this.keyboardActions(jpArea);
@@ -110,53 +116,53 @@ public class Geral extends javax.swing.JFrame {
     private void keyboardActions(JPanel painel) {
         //Cria o ActionMap
         ActionMap actionMap = painel.getActionMap();
-        
-	actionMap.put("new", buttonNew);
+
+        actionMap.put("new", buttonNew);
         actionMap.put("open", buttonOpen);
         actionMap.put("save", buttonSave);
         actionMap.put("compile", buttonCompile);
         actionMap.put("aboutWe", buttonAbout);
-        
-	painel.setActionMap(actionMap);
-	
-	//Pegamos o input map
-	InputMap imap = painel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 
-	//Teclas do teclado
-        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N,InputEvent.CTRL_MASK), "new");
-        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_O,InputEvent.CTRL_MASK), "open");
-        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S,InputEvent.CTRL_MASK), "save");
+        painel.setActionMap(actionMap);
+
+        //Pegamos o input map
+        InputMap imap = painel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+
+        //Teclas do teclado
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK), "new");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK), "open");
+        imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK), "save");
         imap.put(KeyStroke.getKeyStroke("F9"), "compile");
         imap.put(KeyStroke.getKeyStroke("F1"), "aboutWe");
     }
-    
-    private void showFileName(String path){
+
+    private void showFileName(String path) {
         //Salva o nome da variável
         this.filePath = path;
         //Coloca como texto da nossa barra de status
         jtfBarraStatus.setText(this.filePath);
     }
-    
-    private void clearMessageArea(){
+
+    private void clearMessageArea() {
         //Limpa a área de mensagem
         this.jtaMessageArea.setText("");
     }
-        
+
     private void clearAll() {
         //Limpa todos os componentes
         this.filePath = "";
         this.jtaCommand.setText("");
         this.jtfBarraStatus.setText("");
-        
+
         this.clearMessageArea();
     }
-    
-    private void createNew(){
+
+    private void createNew() {
         //Para criar um novo, deve limpar tudo
         this.clearAll();
     }
-    
-    private void open(){
+
+    private void open() {
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.setFileFilter(fileNameExtensionFilter);
         jFileChooser.setAcceptAllFileFilterUsed(false);
@@ -177,8 +183,8 @@ public class Geral extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private void save(){
+
+    private void save() {
         if (this.filePath.isEmpty()) {
             JFileChooser jFileChooser = new JFileChooser();
             jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -190,10 +196,10 @@ public class Geral extends javax.swing.JFrame {
                 if (!this.filePath.toLowerCase().endsWith(".txt")) {
                     this.filePath += ".txt";
                 }
-                
+
                 File arquivo = new File(filePath);
                 JOptionPane.showMessageDialog(null, arquivo.getAbsoluteFile());
-                
+
                 try {
                     BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(arquivo));
                     bufferedWriter.write(this.jtaCommand.getText());
@@ -206,7 +212,7 @@ public class Geral extends javax.swing.JFrame {
             this.clearMessageArea();
             return;
         }
-        
+
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.filePath));
             bufferedWriter.write(jtaCommand.getText());
@@ -214,7 +220,7 @@ public class Geral extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showInputDialog(null, "Não foi possível salvar o seu arquivo");
         }
-        
+
         this.clearMessageArea();
     }
 
@@ -229,15 +235,35 @@ public class Geral extends javax.swing.JFrame {
     private void paste(java.awt.event.ActionEvent evt) {
         transferHandler.importData(jtaCommand, clipboard.getContents(null));
     }
-    
-    private void compile(){
-        jtaMessageArea.append("Compilação de programas ainda não foi implementada. \n");
+
+    private void compile() {
+        //Implementada a parte léxica da compilação
+        Lexico lexico = new Lexico();
+        
+        Util util = new Util();
+        
+        lexico.setInput(jtaCommand.getText());
+        int tmClasse = 30;
+        int tmLinha  = 10;
+        
+        try {
+            Token t = null;
+            jtaMessageArea.setText(util.preencheDireita("linha", tmLinha, ' ')+util.preencheDireita("classe", tmClasse, ' ')+util.preencheDireita("lexema", tmClasse, ' ')+"\n");
+            while ((t = lexico.nextToken()) != null) {
+                jtaMessageArea.setText(jtaMessageArea.getText()+
+                        util.preencheDireita(Integer.toString(t.getPosition()), tmLinha, ' ')+   //Posição
+                        util.preencheDireita(util.getClasse((Integer)t.getId()), tmClasse, ' ')+ //Classe
+                        util.preencheDireita(t.getLexeme(), tmClasse, ' ')+"\n");                //lexema
+            }
+        } catch (LexicalError e) {
+            jtaMessageArea.setText(e.getMessage() + " em "+e.getPosition());
+        }
     }
-    
-    private void about(){
+
+    private void about() {
         jtaMessageArea.append("Equipe formada por: Ana Paula Fidelis e Bárbara Marquez. \n");
     }
-        
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -509,7 +535,7 @@ public class Geral extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void jtfBarraStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfBarraStatusActionPerformed
-        
+
     }//GEN-LAST:event_jtfBarraStatusActionPerformed
 
     private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
