@@ -241,8 +241,10 @@ public class Geral extends javax.swing.JFrame {
         Lexico lexico = new Lexico();
         
         Util util = new Util();
-        
+
+        util.setTexto(jtaCommand.getText());        
         lexico.setInput(jtaCommand.getText());
+        
         int tmClasse = 30;
         int tmLinha  = 10;
         
@@ -251,12 +253,12 @@ public class Geral extends javax.swing.JFrame {
             jtaMessageArea.setText(util.preencheDireita("linha", tmLinha, ' ')+util.preencheDireita("classe", tmClasse, ' ')+util.preencheDireita("lexema", tmClasse, ' ')+"\n");
             while ((t = lexico.nextToken()) != null) {
                 jtaMessageArea.setText(jtaMessageArea.getText()+
-                        util.preencheDireita(Integer.toString(t.getPosition()), tmLinha, ' ')+   //Posição
+                        util.preencheDireita(Integer.toString(util.getLinhaAtu(t.getPosition())), tmLinha, ' ')+   //Posição
                         util.preencheDireita(util.getClasse((Integer)t.getId()), tmClasse, ' ')+ //Classe
                         util.preencheDireita(t.getLexeme(), tmClasse, ' ')+"\n");                //lexema
             }
         } catch (LexicalError e) {
-            jtaMessageArea.setText(e.getMessage() + " em "+e.getPosition());
+            jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());
         }
     }
 

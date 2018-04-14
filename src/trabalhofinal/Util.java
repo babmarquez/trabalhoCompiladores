@@ -11,6 +11,29 @@ package trabalhofinal;
  */
 
 public class Util {
+    private String[] texto;
+    private int linhaAtu;
+    private int countPosition;
+    
+    public void setTexto(String texto){
+        this.texto = texto.split("\n");
+        linhaAtu = 1;
+        countPosition = this.texto[0].length();
+    }
+    
+    public int getLinhaAtu(int position){
+        while(countPosition < position){
+            countPosition+= texto[linhaAtu].length();
+            linhaAtu++;
+        } 
+        
+        return linhaAtu;
+    }
+    
+    public boolean isSimboloInvalido(int lastState){        
+        return ((lastState == 0) || (lastState == 4) || (lastState == 18));
+    }
+    
     
     //Retorna as classes de acordo com as constantes de id
     public String getClasse(int id){

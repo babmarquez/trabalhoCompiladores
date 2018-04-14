@@ -1,2 +1,7 @@
 bool a:= true
 int b := 2
+"oi chatoksoakskkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkoa"
+{teste de comentário
+
+contin} a:= dois
+

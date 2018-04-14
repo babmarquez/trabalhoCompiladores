@@ -18,9 +18,6 @@ public class Lexico implements Constants
     public void setInput(String input)
     {
         this.input = input;
-        String[] teste = input.split("\n");
-        int teste2 = teste[0].length();
-        teste2 = teste.length;
         setPosition(0);
     }
 
@@ -33,7 +30,9 @@ public class Lexico implements Constants
     {
         if ( ! hasInput() )
             return null;
-
+        
+        Util util = new Util();
+        
         int start = position;
 
         int state = 0;
@@ -58,8 +57,11 @@ public class Lexico implements Constants
                 }
             }
         }
-        if (endState < 0 || (endState != state && tokenForState(lastState) == -2))
-            throw new LexicalError(SCANNER_ERROR[lastState], start);
+        if (endState < 0 || (endState != state && tokenForState(lastState) == -2)){
+            end = (end == -1 ? position : end);
+            throw new LexicalError((util.isSimboloInvalido(lastState) ? input.substring(start, end) : "") + 
+                                   SCANNER_ERROR[lastState], start);
+        }
 
         position = end;
 
