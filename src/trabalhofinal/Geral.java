@@ -250,12 +250,18 @@ public class Geral extends javax.swing.JFrame {
         
         try {
             Token t = null;
-            jtaMessageArea.setText(util.preencheDireita("linha", tmLinha, ' ')+util.preencheDireita("classe", tmClasse, ' ')+util.preencheDireita("lexema", tmClasse, ' ')+"\n");
-            while ((t = lexico.nextToken()) != null) {
-                jtaMessageArea.setText(jtaMessageArea.getText()+
-                        util.preencheDireita(Integer.toString(util.getLinhaAtu(t.getPosition())), tmLinha, ' ')+   //Posição
-                        util.preencheDireita(util.getClasse((Integer)t.getId()), tmClasse, ' ')+ //Classe
-                        util.preencheDireita(t.getLexeme(), tmClasse, ' ')+"\n");                //lexema
+            
+            if (jtaCommand.getText().trim().isEmpty()){
+                jtaMessageArea.setText("Nenhum programa para compilar");
+            }else{
+                jtaMessageArea.setText(util.preencheDireita("linha", tmLinha, ' ')+util.preencheDireita("classe", tmClasse, ' ')+util.preencheDireita("lexema", tmClasse, ' ')+"\n");
+                while ((t = lexico.nextToken()) != null) {
+                    jtaMessageArea.setText(jtaMessageArea.getText()+
+                            util.preencheDireita(Integer.toString(util.getLinhaAtu(t.getPosition())), tmLinha, ' ')+   //Posição
+                            util.preencheDireita(util.getClasse((Integer)t.getId()), tmClasse, ' ')+ //Classe
+                            util.preencheDireita(t.getLexeme(), tmClasse, ' ')+"\n");                //lexema
+                }
+                jtaMessageArea.setText(jtaMessageArea.getText()+ "\nPrograma compilado com sucesso.");
             }
         } catch (LexicalError e) {
             jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());

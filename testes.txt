@@ -1,7 +1,6 @@
-bool a:= true
-int b := 2
-"oi chatoksoakskkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkoa"
-{teste de comentário
+{Isto é um comentário}
 
-contin} a:= dois
+   print i_area = 
+
+	"valor" 01,0
 

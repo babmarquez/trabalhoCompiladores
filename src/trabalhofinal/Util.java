@@ -22,7 +22,7 @@ public class Util {
     }
     
     public int getLinhaAtu(int position){
-        while(countPosition < position){
+        while(countPosition < position && linhaAtu < this.texto.length){
             countPosition+= texto[linhaAtu].length();
             linhaAtu++;
         } 
