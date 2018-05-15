@@ -1,0 +1,171 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Compact
+Input = Stream
+Parser = LL
+#RegularDefinitions
+dig: [0-9]
+letra: [a-zA-Z]
+coment_lin: ["\\"][^\n]*
+coment_col: "{"[^}]*"}"
+#Tokens
+//IDENTIFICADOR
+id: {letra}(("_"?{letra}|{dig})*"_"?|"_"?)
+
+//CONSTANTE INTEIRA
+const_int: 0|([1-9]{dig}*)
+
+//CONSTANTE REAL
+const_real: (0|([1-9]{dig}*))","{dig}+
+
+//CONSTANTE CARACTERE
+const_carc: \"([^\n\\\"]|("\"[\\\"]))*\"
+
+//IGNORAR
+: [\s\t\n\r]*|{coment_lin}|{coment_col}
+
+//SÍMBOLOS ESPECIAIS
+":"
+"("
+")"
+"="
+":="
+","
+"&&"
+"||"
+"!"
+"!="
+"<"
+"<="
+">"
+">="
+"+"
+"-"
+"*"
+"/"
+
+//PALAVRA RESERVADA
+BOOL = id: "bool"
+CONSTS = id: "consts"
+DEF = id: "def"
+END = id: "end"
+EXECUTE = id: "execute"
+FALSE = id: "false"
+FLOAT = id: "float"
+GET = id: "get"
+IFFALSE = id: "ifFalse"
+IFTRUE = id: "ifTrue"
+INPUT = id: "input"
+INT = id: "int"
+PRINT = id: "print"
+PRINTLN = id: "println"
+SET = id: "set"
+STR = id: "str"
+TRUE = id: "true"
+TYPES = id: "types"
+VAR = id: "var"
+WHILEFALSE = id: "whileFalse"
+WHILETRUE = id: "whileTrue"
+#NonTerminals
+<programa>
+<def_tipos>
+<declara_id>
+<e_do_tipo>
+<simples>
+<composto>
+<lista_de_campos>
+<campo>
+<def_const>
+<declara_consts>
+<lista_de_identificadores>
+<valor>
+<const_logica>
+<declara_var>
+<declara_tipo>
+<tipo>
+<lista_comandos>
+<comando>
+<comand_atribuicao>
+<comand_manipulacao_compostos>
+<comand_entrada_dados>
+<saida_dados>
+<lista_de_expressoes>
+<selecao>
+<repeticao>
+<condicao_repeticao>
+<condicao>
+<expressão>
+<expressão1>
+<elemento>
+<relacional>
+<relacional1>
+<operador_relacional>
+<aritmética>
+<aritmética1>
+<termo>
+<termo1>
+<fator>
+<fator1>
+#Grammar
+<programa>::= DEF <def_tipos> <def_const> <declara_var> EXECUTE <lista_comandos>;
+
+<def_tipos>::= TYPES <declara_id> | î;
+<declara_id>::= id ":" <e_do_tipo> | id ":" <e_do_tipo> <declara_id>;
+<e_do_tipo>::= <simples> | <composto>;
+<simples>::= INT | FLOAT | STR | BOOL;
+<composto>::= "(" <lista_de_campos> ")";
+<lista_de_campos>::= <campo> | <campo> <lista_de_campos>;
+<campo>::= id ":" <simples>;
+
+<def_const>::= CONSTS <declara_consts> | î;
+<declara_consts>::= <lista_de_identificadores> "=" <valor> | <lista_de_identificadores> "=" <valor> <declara_consts>;
+<lista_de_identificadores>::= id | id ","  <lista_de_identificadores>;
+<valor>::= const_int | const_real | const_carc | <const_logica>;
+<const_logica>::= TRUE | FALSE; 
+
+<declara_var>::= VAR <declara_tipo> | î;
+<declara_tipo>::= <lista_de_identificadores> ":" <tipo> | <lista_de_identificadores> ":" <tipo> <declara_tipo>;
+<tipo>::= INT | FLOAT | STR | BOOL | id;
+
+<lista_comandos>::= <comando> | <comando> <lista_comandos>;
+<comando>::= <comand_atribuicao> | <comand_manipulacao_compostos> | <comand_entrada_dados> | <saida_dados> | <selecao> | <repeticao>;
+
+<comand_atribuicao>::= id ":="  <expressão>;
+
+<comand_manipulacao_compostos>::= id SET "("id "," <expressão>")";
+
+<comand_entrada_dados>::= INPUT "(" <lista_de_identificadores> ")";
+
+<saida_dados>::= PRINT "(" <lista_de_expressoes> ")" | PRINTLN "(" <lista_de_expressoes> ")";
+<lista_de_expressoes>::= <expressão> | <expressão> ","  <lista_de_expressoes>;
+
+<selecao>::= "(" <expressão> ")" <condicao> ":" <lista_comandos> END | "(" <expressão> ")" IFTRUE ":" <lista_comandos> IFFALSE ":" <lista_comandos> END;
+<condicao>::= IFTRUE | IFFALSE;
+
+<repeticao>::= "(" <expressão> ")" <condicao_repeticao> ":" <lista_comandos> END;
+<condicao_repeticao>::= WHILETRUE | WHILEFALSE;
+
+<expressão>::= <elemento> <expressão1>;
+<expressão1>::= "&&" <elemento> <expressão1> | "||" <elemento> <expressão1> | î;
+
+<elemento>::= <relacional> | TRUE | FALSE | "!" <elemento>;
+
+<relacional>::= <aritmética> <relacional1>;
+<relacional1>::= <operador_relacional> <aritmética> | î;
+
+<operador_relacional>::= "=" | "!=" | "<" | "<=" | ">" | ">=";
+
+<aritmética>::= <termo> <aritmética1>;
+<aritmética1>::= "+" <termo> <aritmética1> | "-" <termo> <aritmética1> | î;
+
+<termo>::= <fator> <termo1>;
+<termo1>::= "*" <fator> <termo1> | "/" <fator> <termo1> | î;
+
+<fator>::= id <fator1> | const_int | const_real | const_carc | "(" <expressão> ")" | "+" <fator> | "-" <fator>;
+<fator1>::= GET "(" id ")" | î;
