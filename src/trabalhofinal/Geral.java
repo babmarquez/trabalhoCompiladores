@@ -238,6 +238,8 @@ public class Geral extends javax.swing.JFrame {
     private void compile() {
         //Implementada a parte léxica da compilação
         Lexico lexico = new Lexico();
+        Sintatico sintatico = new Sintatico();
+        Semantico semantico = new Semantico();
         
         Util util = new Util();
 
@@ -247,7 +249,13 @@ public class Geral extends javax.swing.JFrame {
         int tmClasse = 30;
         int tmLinha  = 10;
         
+        jtaMessageArea.setText("");
+        
         try {
+            sintatico.parse(lexico, semantico);
+            
+            lexico.setPosition(0);
+            
             Token t = null;
             
             if (jtaCommand.getText().trim().isEmpty()){
@@ -264,6 +272,10 @@ public class Geral extends javax.swing.JFrame {
             }
         } catch (LexicalError e) {
             jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());
+        }catch (SyntaticError e ){
+            jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());
+        }catch ( SemanticError e ){
+            //Trada erros semânticos
         }
     }
 

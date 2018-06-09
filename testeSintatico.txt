@@ -1,0 +1,5 @@
+def
+execute
+  input (lado)
+  área lado * lado
+  print (area)
