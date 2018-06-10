@@ -254,9 +254,9 @@ public class Geral extends javax.swing.JFrame {
         try {
             sintatico.parse(lexico, semantico);
             
-            lexico.setPosition(0);
+            lexico.setPosition(0); 
             
-            Token t = null;
+            Token t = null; 
             
             if (jtaCommand.getText().trim().isEmpty()){
                 jtaMessageArea.setText("Nenhum programa para compilar");

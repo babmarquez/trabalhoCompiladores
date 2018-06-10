@@ -12,7 +12,7 @@ Parser = LL
 #RegularDefinitions
 dig: [0-9]
 letra: [a-zA-Z]
-coment_lin: ["\\"][^\n]*
+coment_lin: "\\"[^\n]*
 coment_col: "{"[^}]*"}"
 #Tokens
 //IDENTIFICADOR
@@ -31,7 +31,6 @@ const_carc: \"([^\n\\\"]|("\"[\\\"]))*\"
 : [\s\t\n\r]*|{coment_lin}|{coment_col}
 
 //SÍMBOLOS ESPECIAIS
-":"
 "("
 ")"
 "="
@@ -49,6 +48,7 @@ const_carc: \"([^\n\\\"]|("\"[\\\"]))*\"
 "-"
 "*"
 "/"
+":"
 
 //PALAVRA RESERVADA
 BOOL = id: "bool"
@@ -76,6 +76,7 @@ WHILETRUE = id: "whileTrue"
 <programa>
 <def_tipo>
 <declara_id>
+<declara_id1>
 <e_do_tipo>
 <simples>
 <lista_de_campos>
@@ -94,6 +95,8 @@ WHILETRUE = id: "whileTrue"
 <lista_comandos>
 <lista_comandos1>
 <comando>
+<comando1>
+<comando2>
 <comand_atribuicao>
 <comand_manipulacao_compostos>
 <comand_entrada_dados>
@@ -102,7 +105,6 @@ WHILETRUE = id: "whileTrue"
 <lista_de_expressoes1>
 <selecao>
 <selecao1>
-<condicao>
 <repeticao>
 <condicao_repeticao>
 <expressao>
@@ -121,7 +123,8 @@ WHILETRUE = id: "whileTrue"
 <programa>::= DEF <def_tipo> <def_const> <declara_var> EXECUTE <lista_comandos>;
  
 <def_tipo>::= TYPES <declara_id> | î;
-<declara_id>::= id ":" <e_do_tipo> <declara_id> | î;
+<declara_id>::= id ":" <e_do_tipo> <declara_id1>;
+<declara_id1>::= <declara_id> | î;
 <e_do_tipo>::= <simples> | "(" <lista_de_campos> ")";
 <simples>::= INT | FLOAT | STR | BOOL;
 <lista_de_campos>::= <campo> <lista_de_campos1>;
@@ -142,22 +145,23 @@ WHILETRUE = id: "whileTrue"
  
 <lista_comandos>::= <comando> <lista_comandos1>;
 <lista_comandos1>::= <lista_comandos> | î;
-<comando>::= <comand_atribuicao> | <comand_manipulacao_compostos> | <comand_entrada_dados> | <saida_dados> | <selecao> | <repeticao>;
-<comand_atribuicao>::= id ":=" <expressao>;
+<comando>::= id <comando1> | <comand_entrada_dados> | <saida_dados> | "(" <expressao> ")" <comando2>;
+<comando1>::= <comand_atribuicao> | <comand_manipulacao_compostos>;
+<comando2>::= <selecao> | <repeticao>;
+<comand_atribuicao>::= ":=" <expressao>;
 
-<comand_manipulacao_compostos>::= id SET "("id "," <expressao>")";
+<comand_manipulacao_compostos>::= SET "("id "," <expressao>")";
 
 <comand_entrada_dados>::= INPUT "(" <lista_de_identificadores> ")";
 
 <saida_dados>::= PRINT"(" <lista_de_expressoes> ")" | PRINTLN "(" <lista_de_expressoes> ")";
-<lista_de_expressoes>::= <expressão> <lista_de_expressoes1>;
-<lista_de_expressoes1>::= "," <lista_de_expressoes> | î;
+<lista_de_expressoes>::= <expressao> <lista_de_expressoes1>;
+<lista_de_expressoes1>::= "," <expressao> <lista_de_expressoes> | î;
 
-<selecao>::= "(" <expressao> ")" <selecao1>;
-<selecao1>::= <condicao> ":" <lista_comandos1> END | IFTRUE ":" <lista_comandos1> IFFALSE ":" <lista_comandos1> END;
-<condicao>::= IFTRUE | IFFALSE;
+<selecao>::= IFTRUE ":" <lista_comandos> <selecao1> | IFFALSE ":" <lista_comandos> END;
+<selecao1>::= END | IFFALSE ":" <lista_comandos> END;
 
-<repeticao>::= "(" <expressao> ")" <condicao_repeticao> ":" <lista_comandos1> END;
+<repeticao>::= <condicao_repeticao> ":" <lista_comandos> END;
 <condicao_repeticao>::= WHILETRUE | WHILEFALSE;
 
 <expressao>::= <elemento> <expressao1>;
