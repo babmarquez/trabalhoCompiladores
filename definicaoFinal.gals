@@ -156,7 +156,7 @@ WHILETRUE = id: "whileTrue"
 
 <saida_dados>::= PRINT"(" <lista_de_expressoes> ")" | PRINTLN "(" <lista_de_expressoes> ")";
 <lista_de_expressoes>::= <expressao> <lista_de_expressoes1>;
-<lista_de_expressoes1>::= "," <expressao> <lista_de_expressoes> | î;
+<lista_de_expressoes1>::= "," <expressao> <lista_de_expressoes1> | î;
 
 <selecao>::= IFTRUE ":" <lista_comandos> <selecao1> | IFFALSE ":" <lista_comandos> END;
 <selecao1>::= END | IFFALSE ":" <lista_comandos> END;

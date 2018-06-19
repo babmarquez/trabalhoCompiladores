@@ -27,6 +27,8 @@ public class Sintatico implements Constants
 
     private boolean step() throws LexicalError, SyntaticError, SemanticError
     {
+        Util util = new Util();
+        
         if (currentToken == null)
         {
             int pos = 0;
@@ -58,7 +60,7 @@ public class Sintatico implements Constants
             }
             else
             {
-                throw new SyntaticError("encontrado "+currentToken.getLexeme()+" "+
+                throw new SyntaticError(util.getDescSemantica(currentToken.getId(), currentToken.getLexeme())+" "+
                         PARSER_ERROR[x], currentToken.getPosition());
             }
         }
@@ -67,7 +69,7 @@ public class Sintatico implements Constants
             if (pushProduction(x, a))
                 return false;
             else
-                throw new SyntaticError("encontrado "+currentToken.getLexeme()+" "+
+                throw new SyntaticError(util.getDescSemantica(currentToken.getId(), currentToken.getLexeme())+" "+
                         PARSER_ERROR[x], currentToken.getPosition());
         }
         else // isSemanticAction(x)

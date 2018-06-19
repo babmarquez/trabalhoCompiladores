@@ -34,6 +34,12 @@ public class Util {
         return ((lastState == 0) || (lastState == 4) || (lastState == 18));
     }
     
+    public String getDescSemantica(int id, String lexeme){
+        if ((id < 6) && (id > 2))
+            return "encontrado " + getClasse(id);
+        else
+            return "encontrado " + (lexeme == "$" ? "fim de programa" : lexeme);
+    }
     
     //Retorna as classes de acordo com as constantes de id
     public String getClasse(int id){
