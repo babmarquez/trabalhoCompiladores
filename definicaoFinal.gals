@@ -120,7 +120,7 @@ WHILETRUE = id: "whileTrue"
 <fator>
 <fator1>
 #Grammar
-<programa>::= DEF <def_tipo> <def_const> <declara_var> EXECUTE <lista_comandos>;
+<programa>::= #15 DEF <def_tipo> <def_const> <declara_var> EXECUTE <lista_comandos> #16;
  
 <def_tipo>::= TYPES <declara_id> | î;
 <declara_id>::= id ":" <e_do_tipo> <declara_id1>;
@@ -154,9 +154,9 @@ WHILETRUE = id: "whileTrue"
 
 <comand_entrada_dados>::= INPUT "(" <lista_de_identificadores> ")";
 
-<saida_dados>::= PRINT"(" <lista_de_expressoes> ")" | PRINTLN "(" <lista_de_expressoes> ")";
-<lista_de_expressoes>::= <expressao> <lista_de_expressoes1>;
-<lista_de_expressoes1>::= "," <expressao> <lista_de_expressoes1> | î;
+<saida_dados>::= PRINT"(" <lista_de_expressoes> ")" | PRINTLN "(" <lista_de_expressoes> ")" #17;
+<lista_de_expressoes>::= <expressao> #14 <lista_de_expressoes1>;
+<lista_de_expressoes1>::= "," <expressao> #14 <lista_de_expressoes1> | î;
 
 <selecao>::= IFTRUE ":" <lista_comandos> <selecao1> | IFFALSE ":" <lista_comandos> END;
 <selecao1>::= END | IFFALSE ":" <lista_comandos> END;
@@ -165,20 +165,20 @@ WHILETRUE = id: "whileTrue"
 <condicao_repeticao>::= WHILETRUE | WHILEFALSE;
 
 <expressao>::= <elemento> <expressao1>;
-<expressao1>::= "&&" <elemento> <expressao1> | "||" <elemento> <expressao1> | î;
+<expressao1>::= "&&" <elemento> #18 <expressao1> | "||" <elemento> #19 <expressao1> | î;
 
-<elemento>::= <relacional> | TRUE | FALSE | "!" <elemento>;
+<elemento>::= <relacional> | TRUE #11 | FALSE #12 | "!" <elemento> #13;
 
 <relacional>::= <aritmetica> <relacional1>;
-<relacional1>::= <operador_relacional> <aritmetica> | î;
+<relacional1>::= <operador_relacional> #9 <aritmetica> #10 | î;
 
-<operador_relacional>::= "=" | "!=" | "<" | "<=" | ">" | ">=";
+<operador_relacional>::= "=" | "!=" | "<" | "<=" | ">" | ">=" ;
 
 <aritmetica>::= <termo> <aritmetica1>;
-<aritmetica1>::= "+" <termo> <aritmetica1> | "-" <termo> <aritmetica1> | î;
+<aritmetica1>::= "+" <termo> #1 <aritmetica1> | "-" <termo> #2 <aritmetica1> | î;
 
 <termo>::= <fator> <termo1>;
 <termo1>::= "*" <fator> <termo1> | "/" <fator> <termo1> | î;
 
-<fator>::= id <fator1> | const_int | const_real | const_carc | "(" <expressao> ")" | "+" <fator> | "-" <fator>;
+<fator>::= id <fator1> | const_int #5 | const_real #6 | const_carc #20 | "(" <expressao> ")" | "+" <fator> #7 | "-" <fator> #8;
 <fator1>::= GET "(" id ")" | î;

@@ -48,4 +48,5 @@ public interface Constants extends ScannerConstants, ParserConstants
     int t_VAR = 42;
     int t_WHILEFALSE = 43;
     int t_WHILETRUE = 44;
+
 }
