@@ -269,6 +269,30 @@ public class Geral extends javax.swing.JFrame {
                             util.preencheDireita(t.getLexeme(), tmClasse, ' ')+"\n");                //lexema
                 }*/
                 jtaMessageArea.setText(jtaMessageArea.getText()+ "Programa compilado com sucesso.");
+                
+                
+                
+                try {
+                    if (jtfBarraStatus.getText().isEmpty()){ 
+                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("C:\\ArquivoGerado.il")));
+                        bufferedWriter.write(sintatico.getCodigoGerado());
+                        bufferedWriter.close();
+                    }else{
+                        String caminho = jtfBarraStatus.getText();
+                        String nomeArquivo = jtfBarraStatus.getText();
+                        caminho = caminho.substring(0, caminho.lastIndexOf("\\"));
+                        nomeArquivo = nomeArquivo.substring(nomeArquivo.lastIndexOf("\\"), nomeArquivo.length());
+                        nomeArquivo = nomeArquivo.substring(0, nomeArquivo.lastIndexOf("."));
+                        
+                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(caminho+nomeArquivo+".il")));
+                        bufferedWriter.write(sintatico.getCodigoGerado());
+                        bufferedWriter.close();
+                        
+                        jtfBarraStatus.setText(caminho+nomeArquivo+".il");
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showInputDialog(null, "Não foi possível salvar o seu arquivo");
+                }
             }
         } catch (LexicalError e) {
             jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());

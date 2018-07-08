@@ -946,7 +946,7 @@ public interface ScannerConstants
         " símbolo inválido",//"Caractere n�o esperado",
         "",
         "",
-        "constante caractere inválida ou não finalizada",//"Erro identificando const_carc",
+        "constante str inválida ou não finalizada",//"Erro identificando const_carc",
         " símbolo inválido",//"Erro identificando \"&&\"",
         "",
         "",

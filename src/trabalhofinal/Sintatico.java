@@ -9,6 +9,10 @@ public class Sintatico implements Constants
     private Token previousToken;
     private Lexico scanner;
     private Semantico semanticAnalyser;
+    
+    public String getCodigoGerado(){
+        return semanticAnalyser.codigo;
+    }
 
     private static final boolean isTerminal(int x)
     {
