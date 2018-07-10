@@ -1,0 +1,10 @@
+def 
+var CH: int 
+execute 
+  print("qual a CH de compiladores? ") 
+  input(CH) 
+  (CH < 18) whileTrue:  
+    print("qual a CH de compiladores? ") 
+    input(CH) 
+  end 
+  print("total de créditos: ", CH / 18) 

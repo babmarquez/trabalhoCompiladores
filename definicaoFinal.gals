@@ -132,36 +132,36 @@ WHILETRUE = id: "whileTrue"
 <campo> ::= id ":" <simples>;
  
 <def_const>::= CONSTS <declara_consts> | î;
-<declara_consts>::= <lista_de_identificadores> "=" <valor> <declara_consts1>;
+<declara_consts>::= <lista_de_identificadores> "=" <valor> #32 <declara_consts1>;
 <declara_consts1>::= <declara_consts> | î;
 <valor>::= const_int | const_real | const_carc | TRUE | FALSE;
  
 <declara_var>::= VAR <declara_tipo> | î;
-<declara_tipo>::= <lista_de_identificadores> ":" <tipo> <declara_tipo1>;
+<declara_tipo>::= <lista_de_identificadores> ":" <tipo> #21 #23 <declara_tipo1>;
 <declara_tipo1>::= <declara_tipo> | î;
 <tipo>::= INT | FLOAT | STR | BOOL | id;
-<lista_de_identificadores>::= id <lista_de_identificadores1>;
+<lista_de_identificadores>::= id #22 <lista_de_identificadores1>;
 <lista_de_identificadores1>::= "," <lista_de_identificadores> | î;
  
 <lista_comandos>::= <comando> <lista_comandos1>;
 <lista_comandos1>::= <lista_comandos> | î;
-<comando>::= id <comando1> | <comand_entrada_dados> | <saida_dados> | "(" <expressao> ")" <comando2>;
+<comando>::= id <comando1> | <comand_entrada_dados> | <saida_dados> | #27 "(" <expressao> ")" <comando2>;
 <comando1>::= <comand_atribuicao> | <comand_manipulacao_compostos>;
 <comando2>::= <selecao> | <repeticao>;
-<comand_atribuicao>::= ":=" <expressao>;
+<comand_atribuicao>::= #22 ":=" <expressao> #26;
 
 <comand_manipulacao_compostos>::= SET "("id "," <expressao>")";
 
-<comand_entrada_dados>::= INPUT "(" <lista_de_identificadores> ")";
+<comand_entrada_dados>::= INPUT "(" <lista_de_identificadores> #24 ")";
 
 <saida_dados>::= PRINT"(" <lista_de_expressoes> ")" | PRINTLN "(" <lista_de_expressoes> ")" #17;
 <lista_de_expressoes>::= <expressao> #14 <lista_de_expressoes1>;
 <lista_de_expressoes1>::= "," <expressao> #14 <lista_de_expressoes1> | î;
 
-<selecao>::= IFTRUE ":" <lista_comandos> <selecao1> | IFFALSE ":" <lista_comandos> END;
-<selecao1>::= END | IFFALSE ":" <lista_comandos> END;
+<selecao>::= IFTRUE #28 ":" <lista_comandos> <selecao1> | IFFALSE #28 ":" <lista_comandos> END #29;
+<selecao1>::= END #29 | #30 IFFALSE ":" <lista_comandos> END #29;
 
-<repeticao>::= <condicao_repeticao> ":" <lista_comandos> END;
+<repeticao>::= <condicao_repeticao> #28 ":" <lista_comandos> END #31;
 <condicao_repeticao>::= WHILETRUE | WHILEFALSE;
 
 <expressao>::= <elemento> <expressao1>;
@@ -178,7 +178,7 @@ WHILETRUE = id: "whileTrue"
 <aritmetica1>::= "+" <termo> #1 <aritmetica1> | "-" <termo> #2 <aritmetica1> | î;
 
 <termo>::= <fator> <termo1>;
-<termo1>::= "*" <fator> <termo1> | "/" <fator> <termo1> | î;
+<termo1>::= "*" <fator> #3 <termo1> | "/" <fator> #4 <termo1> | î;
 
-<fator>::= id <fator1> | const_int #5 | const_real #6 | const_carc #20 | "(" <expressao> ")" | "+" <fator> #7 | "-" <fator> #8;
+<fator>::= id #25 <fator1> | const_int #5 | const_real #6 | const_carc #20 | "(" <expressao> ")" | "+" <fator> #7 | "-" <fator> #8;
 <fator1>::= GET "(" id ")" | î;

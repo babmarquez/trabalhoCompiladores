@@ -1,14 +1,22 @@
 package trabalhofinal;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import trabalhofinal.pilha.PilhaLista;
 
 public class Semantico implements Constants
 {
-    PilhaLista<TipoExpressao> pilha = new PilhaLista();
+    PilhaLista<TipoExpressao> pilhaTipos = new PilhaLista();
+    PilhaLista<Integer> pilhaRotulos = new PilhaLista();
+    ArrayList<String> listaIdentificadores = new ArrayList<String>();
+    Map<String, Simbolos> tabelaSimbolos = new HashMap<String, Simbolos>();
     String codigo = "";
     String operador = "";
+    TipoExpressao tipoVar;
     
     String ultimo = "";
+    int rotuloCount = 1;
     
     public void executeAction(int action, Token token)	throws SemanticError
     {
@@ -55,80 +63,121 @@ public class Semantico implements Constants
                 break;    
             case 20: acao20(token);
                 break;
+            case 21: acao21(token);
+                break;    
+            case 22: acao22(token);
+                break;   
+            case 23: acao23(token);
+                break;  
+            case 24: acao24(token);
+                break;
+            case 25: acao25(token);
+                break;
+            case 26: acao26(token);
+                break;    
+            case 27: acao27();
+                break;    
+            case 28: acao28();
+                break;     
+            case 29: acao29();
+                break;     
+            case 30: acao30();
+                break;    
+            case 31: acao31();
+                break;    
+            case 32: acao32(token);
+                break;    
+                
         }        
     }	
     
-    private void acao01(){
-        TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
-        if ((t1 == TipoExpressao.FLOAT64) || (t2 == TipoExpressao.FLOAT64))
-            pilha.push(TipoExpressao.FLOAT64);
+    private void acao01() throws SemanticError{
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
+        if ((t1 != TipoExpressao.FLOAT64) && (t1 != TipoExpressao.INT64) &&
+            (t2 != TipoExpressao.FLOAT64) && (t2 != TipoExpressao.INT64))
+            throw new SemanticError("tipos incompatíveis em operação aritmética binária");
         else
-            pilha.push(TipoExpressao.INT64); 
+        if ((t1 == TipoExpressao.FLOAT64) || (t2 == TipoExpressao.FLOAT64))
+            pilhaTipos.push(TipoExpressao.FLOAT64);
+        else
+            pilhaTipos.push(TipoExpressao.INT64); 
+       
         codigo += "\nadd";
     }
     
-    private void acao02(){
-        TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
-        if ((t1 == TipoExpressao.FLOAT64) || (t2 == TipoExpressao.FLOAT64))
-            pilha.push(TipoExpressao.FLOAT64);
+    private void acao02() throws SemanticError{
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
+        if ((t1 != TipoExpressao.FLOAT64) && (t1 != TipoExpressao.INT64) &&
+            (t2 != TipoExpressao.FLOAT64) && (t2 != TipoExpressao.INT64))
+            throw new SemanticError("tipos incompatíveis em operação aritmética binária");
         else
-            pilha.push(TipoExpressao.INT64);
+        if ((t1 == TipoExpressao.FLOAT64) || (t2 == TipoExpressao.FLOAT64))
+            pilhaTipos.push(TipoExpressao.FLOAT64);
+        else
+            pilhaTipos.push(TipoExpressao.INT64);
         codigo += "\nsub";
     }
     
-    private void acao03(){
-        TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
-        if ((t1 == TipoExpressao.FLOAT64) || (t2 == TipoExpressao.FLOAT64))
-            pilha.push(TipoExpressao.FLOAT64);
+    private void acao03() throws SemanticError{
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
+        if ((t1 != TipoExpressao.FLOAT64) && (t1 != TipoExpressao.INT64) &&
+            (t2 != TipoExpressao.FLOAT64) && (t2 != TipoExpressao.INT64))
+            throw new SemanticError("tipos incompatíveis em operação aritmética binária");
         else
-            pilha.push(TipoExpressao.INT64);
+        if ((t1 == TipoExpressao.FLOAT64) || (t2 == TipoExpressao.FLOAT64))
+            pilhaTipos.push(TipoExpressao.FLOAT64);
+        else
+            pilhaTipos.push(TipoExpressao.INT64);
         codigo += "\nmul";
     }
     
     private void acao04() throws SemanticError{
-        TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
-        if (t1.equals(t2))
-            pilha.push(t1);
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
+        if ((t1 != TipoExpressao.FLOAT64) && (t1 != TipoExpressao.INT64) &&
+            (t2 != TipoExpressao.FLOAT64) && (t2 != TipoExpressao.INT64))
+            throw new SemanticError("tipos incompatíveis em operação aritmética binária");
         else
-            throw new SemanticError("Erro semantico");
-        
-        codigo += "\ndiv";
+        if (t1.equals(t2)){
+            pilhaTipos.push(t1);        
+            codigo += "\ndiv";
+        }
     }
     
     private void acao05(Token token){
-        pilha.push(TipoExpressao.INT64);
+        pilhaTipos.push(TipoExpressao.INT64);
         codigo += "\nldc.i8 "+token.getLexeme();
         codigo += "\nconv.r8";
     }
     
     private void acao06(Token token){
-        pilha.push(TipoExpressao.FLOAT64);
+        pilhaTipos.push(TipoExpressao.FLOAT64);
         codigo += "\nldc.r8 "+token.getLexeme().replace(",", ".");
     }
     
     private void acao07() throws SemanticError{
-        TipoExpressao t1 = pilha.pop();
+        TipoExpressao t1 = pilhaTipos.pop();
         if (t1.equals(TipoExpressao.INT64) || t1.equals(TipoExpressao.FLOAT64))
-            pilha.push(t1);
+            pilhaTipos.push(t1);
         else
-            throw new SemanticError("Erro semantico");
+            throw new SemanticError("tipo incompatível em operação aritmética unária");
     }
     
     private void acao08() throws SemanticError{
-        TipoExpressao t1 = pilha.pop();
-        if (t1.equals(TipoExpressao.INT64) || t1.equals(TipoExpressao.FLOAT64))
-            pilha.push(t1);
-        else
-            throw new SemanticError("Erro semantico");
+        TipoExpressao t1 = pilhaTipos.pop();
+        if (t1.equals(TipoExpressao.INT64) || t1.equals(TipoExpressao.FLOAT64)){
+            pilhaTipos.push(t1);
+            
+            codigo += "\nldc.i8 -1";
+            if (t1.equals(TipoExpressao.INT64))
+                codigo += "\nconv.r8";
+            codigo += "\nmul";
+        }else
+            throw new SemanticError("tipo incompatível em operação aritmética unária");
         
-        codigo += "\nldc.i8 -1";
-        if (t1.equals(TipoExpressao.INT64))
-            codigo += "\nconv.r8";
-        codigo += "\nmul";
     }
     
     private void acao09(Token token){
@@ -136,12 +185,13 @@ public class Semantico implements Constants
     }
     
     private void acao10() throws SemanticError{
-        TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
-        if (t1.equals(t2))
-            pilha.push(TipoExpressao.BOOL);
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
+        if ((t1.equals(t2)) || (t1.equals(TipoExpressao.FLOAT64) && t2.equals(TipoExpressao.INT64)) ||
+            (t1.equals(TipoExpressao.INT64) && t2.equals(TipoExpressao.FLOAT64)))
+            pilhaTipos.push(TipoExpressao.BOOL);
         else
-            throw new SemanticError("Erro semantico");
+            throw new SemanticError("tipos incompatíveis em expressão relacional");
         
         switch (operador){
             case ">": codigo += "\ncgt"; break;
@@ -167,28 +217,28 @@ public class Semantico implements Constants
     }
     
     private void acao11(){
-        pilha.push(TipoExpressao.BOOL);
+        pilhaTipos.push(TipoExpressao.BOOL);
         codigo += "\nldc.i4.1";
     }
     
     private void acao12(){
-        pilha.push(TipoExpressao.BOOL);
+        pilhaTipos.push(TipoExpressao.BOOL);
         codigo += "\nldc.i4.0";
     }
     
     private void acao13() throws SemanticError{
-        TipoExpressao t1 = pilha.pop();
+        TipoExpressao t1 = pilhaTipos.pop();
         if (t1.equals(TipoExpressao.BOOL))
-            pilha.push(TipoExpressao.BOOL);
+            pilhaTipos.push(TipoExpressao.BOOL);
         else
-            throw new SemanticError("Erro semantico");
+            throw new SemanticError("tipo incompatível em operação lógica unária");
         
         codigo += "\nldc.i4.1";
         codigo += "\nxor";
     }
     
     private void acao14(Token token){
-        TipoExpressao t1 = pilha.pop();
+        TipoExpressao t1 = pilhaTipos.pop();
         if (t1.equals(TipoExpressao.INT64))
             codigo += "\nconv.i8";
         
@@ -202,7 +252,7 @@ public class Semantico implements Constants
         codigo += "\n.module _codigo_objeto.exe";
         codigo += "\n\n.class public _UNICA{";
         codigo += "\n.method static public void _principal() { ";
-        codigo += "\n  ntrypoint";
+        codigo += "\n  .entrypoint";
     }
     
     private void acao16(){
@@ -217,26 +267,190 @@ public class Semantico implements Constants
         codigo += "\ncall void [mscorlib]System.Console::Write("+ultimo+")";        
     }
     
-    private void acao18(){
-        /*TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
+    private void acao18() throws SemanticError{
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
         if ((t1 == TipoExpressao.BOOL) && (t2 == TipoExpressao.BOOL)){
             
-        }*/
+        }else{
+            throw new SemanticError("tipos incompatíveis em operação lógica binária");
+        }
+        
         codigo += "\nAção para && AQUI";
     }
     
-    private void acao19(){
-        /*TipoExpressao t1 = pilha.pop();
-        TipoExpressao t2 = pilha.pop();
+    private void acao19() throws SemanticError{
+        TipoExpressao t1 = pilhaTipos.pop();
+        TipoExpressao t2 = pilhaTipos.pop();
         if ((t1 == TipoExpressao.BOOL) && (t2 == TipoExpressao.BOOL)){
             
-        }*/
+        }else{
+            throw new SemanticError("tipos incompatíveis em operação lógica binária");
+        }
+        
         codigo += "\nAção para || AQUI";
     }
     
     private void acao20(Token token){        
-        pilha.push(TipoExpressao.STRING);
+        pilhaTipos.push(TipoExpressao.STRING);
         codigo += "\nldstr "+token.getLexeme().replace(",", ".");
+    }
+    
+    private void acao21(Token token){                        
+        if (token.getLexeme().toUpperCase().equals("INT")){
+            tipoVar = TipoExpressao.INT64;
+        }else if (token.getLexeme().toUpperCase().equals("FLOAT")){
+            tipoVar = TipoExpressao.FLOAT64;
+        }else if (token.getLexeme().toUpperCase().equals("BOOL")){
+            tipoVar = TipoExpressao.BOOL;
+        }else if (token.getLexeme().toUpperCase().equals("STRING")){
+            tipoVar = TipoExpressao.STRING;
+        };
+    }
+    
+    private void acao22(Token token) throws SemanticError{      
+        if (listaIdentificadores.indexOf(token.getLexeme()) > 0)
+            throw new SemanticError(token.getLexeme()+" já declarado");
+        else
+            listaIdentificadores.add(token.getLexeme());
+    }    
+    
+    private void acao23(Token token) throws SemanticError{      
+        for (String id : listaIdentificadores){
+            if (tabelaSimbolos.containsKey(id))
+                throw new SemanticError(token.getLexeme()+" já declarado");
+            
+            Simbolos s1 = new Simbolos();
+            s1.setClasse('V');
+            s1.setIdentificador(id);
+            s1.setTipo(tipoVar);
+            
+            tabelaSimbolos.put(id, s1);
+            
+            codigo+= "\n.locals("+tipoVar.name().toLowerCase()+" "+id+")";
+        }            
+        listaIdentificadores.clear();
+    }
+    
+    private void acao24(Token token) throws SemanticError{      
+        for (String id : listaIdentificadores){
+            if (tabelaSimbolos.containsKey(id)){
+                Simbolos s1 = tabelaSimbolos.get(id);
+                String classe;
+                
+                switch (s1.getTipo()){
+                    case INT64  : classe = "Int64";
+                        break;
+                    case FLOAT64: classe = "Double";
+                        break;    
+                    case STRING : classe = "String";
+                        break;
+                    case BOOL   : classe = "Bool";
+                        break;
+                    default: 
+                        throw new SemanticError("tipo de dado não especificado");
+                }
+                
+                codigo+= "\ncall string [mscorlib]System.Console::ReadLine()";
+                codigo+= "\ncall "+s1.getTipo().name().toLowerCase()+" [mscorlib]System."+classe+"::Parse(string)";
+                codigo+= "\nstloc "+id;
+            }else
+                throw new SemanticError(token.getLexeme()+" não declarado");
+                        
+        }            
+        listaIdentificadores.clear();
+    }
+    
+    private void acao25(Token token) throws SemanticError{  
+        if (tabelaSimbolos.containsKey(token.getLexeme())){
+            Simbolos s1 = tabelaSimbolos.get(token.getLexeme());        
+        
+            pilhaTipos.push(s1.getTipo());
+            if (s1.getClasse() == 'V')
+                codigo += "\nldloc "+token.getLexeme();
+            else
+                codigo += "\nldloc "+s1.getValor();
+            
+            if (s1.getTipo() == TipoExpressao.INT64)
+                codigo += "\nconv.r8";
+        }else{
+            throw new SemanticError(token.getLexeme()+" não declarado");
+        }
+    }
+    
+    private void acao26(Token token) throws SemanticError{  
+        String id = listaIdentificadores.get(listaIdentificadores.size()-1);
+        if (tabelaSimbolos.containsKey(id)){
+            Simbolos s1 = tabelaSimbolos.get(id);                
+            TipoExpressao t1 = pilhaTipos.pop();
+            
+            if (s1.getTipo().equals(t1)){
+                if (t1.equals(TipoExpressao.INT64))
+                    codigo += "\nconv.i8";
+                codigo += "\nstloc "+id;
+            }else
+                throw new SemanticError("tipo incompatível em comando de atribuição");
+        }else{
+            throw new SemanticError(token.getLexeme()+" não declarado");
+        }
+    }
+    
+    private void acao27(){  
+        pilhaRotulos.push(rotuloCount);
+        codigo += "\nlabel"+rotuloCount+":";
+        rotuloCount++;
+    }
+    
+    private void acao28() {  
+        pilhaRotulos.push(rotuloCount);
+        codigo += "\nbrfalse label"+rotuloCount;
+        rotuloCount++;
+    }
+    
+    private void acao29() {  
+        int rotulo = pilhaRotulos.pop();
+        codigo += "\nlabel"+rotulo+":";
+    }
+    
+    private void acao30(){
+        int rotulo = pilhaRotulos.pop();
+        codigo += "\nbr label"+rotuloCount;
+        codigo += "\nlabel"+rotulo+":";
+        pilhaRotulos.push(rotuloCount);
+        rotuloCount++;
+    }
+    
+    private void acao31(){
+        int rotulo1 = pilhaRotulos.pop();
+        int rotulo2 = pilhaRotulos.pop();
+        
+        codigo += "\nbr label"+rotulo2;
+        codigo += "\nlabel"+rotulo1+":";
+    }
+    
+    private void acao32(Token token) throws SemanticError{                
+        String id = listaIdentificadores.get(listaIdentificadores.size());
+        
+        if (tabelaSimbolos.containsKey(id)){
+            throw new SemanticError(token.getLexeme()+" já declarado");
+        }
+        
+        Simbolos simbolo = new Simbolos();
+        simbolo.setClasse('C');
+        simbolo.setIdentificador(id);
+        simbolo.setValor(token.getLexeme());
+        
+        switch (token.getId()){
+            case 5: simbolo.setTipo(TipoExpressao.STRING);
+                break;
+            case 4: simbolo.setTipo(TipoExpressao.FLOAT64);
+                break;
+            case 3: simbolo.setTipo(TipoExpressao.INT64);
+                break;
+            default: simbolo.setTipo(TipoExpressao.BOOL);
+                break;
+        }            
+        
+        tabelaSimbolos.put(id, simbolo);
     }
 }

@@ -273,10 +273,29 @@ public class Geral extends javax.swing.JFrame {
                 
                 
                 try {
-                    if (jtfBarraStatus.getText().isEmpty()){ 
-                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File("C:\\ArquivoGerado.il")));
-                        bufferedWriter.write(sintatico.getCodigoGerado());
-                        bufferedWriter.close();
+                    if (jtfBarraStatus.getText().isEmpty()){
+                        JFileChooser jFileChooser = new JFileChooser();
+                        jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                        jFileChooser.setAcceptAllFileFilterUsed(false);
+                        jFileChooser.setFileFilter(fileNameExtensionFilter);
+                        int option = jFileChooser.showSaveDialog(this);
+                        if (option == APPROVE_OPTION) {
+                            this.showFileName(jFileChooser.getSelectedFile().getAbsolutePath());
+                            if (!this.filePath.toLowerCase().endsWith(".il")) {
+                                this.filePath += ".il";
+                            }
+
+                            File arquivo = new File(filePath);
+                            JOptionPane.showMessageDialog(null, arquivo.getAbsoluteFile());
+
+                            try {
+                                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(arquivo));
+                                bufferedWriter.write(sintatico.getCodigoGerado());
+                                bufferedWriter.close();
+                            } catch (IOException ex) {
+                                JOptionPane.showInputDialog(null, "Não foi possível salvar o seu arquivo");
+                            }
+                        }                        
                     }else{
                         String caminho = jtfBarraStatus.getText();
                         String nomeArquivo = jtfBarraStatus.getText();
@@ -299,7 +318,7 @@ public class Geral extends javax.swing.JFrame {
         }catch (SyntaticError e ){
             jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());
         }catch ( SemanticError e ){
-            //Trada erros semânticos
+            jtaMessageArea.setText("Erro na linha "+util.getLinhaAtu(e.getPosition())+" - "+e.getMessage());
         }
     }
 
